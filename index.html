@@ -19,9 +19,8 @@
           colors: {
             brand: {
               red: '#e11d48',
-              gold: '#f59e0b',
-              dark: '#0f172a',
-              card: '#1e293b'
+              gold: '#d97706',
+              dark: '#0f172a'
             }
           },
           fontFamily: {
@@ -35,62 +34,62 @@
   <style>
     body {
       font-family: 'Kanit', 'Prompt', sans-serif;
-      background-color: #0b1120;
-      color: #f1f5f9;
+      background-color: #f8fafc;
+      color: #1e293b;
       -webkit-tap-highlight-color: transparent;
     }
-    /* Custom Scrollbar */
+    /* Clean Minimalist Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     
     .food-card {
-      transition: all 0.25s ease-in-out;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .food-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
     }
     .pulse-ring {
       animation: pulseGlow 1.8s infinite;
     }
     @keyframes pulseGlow {
-      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
-      70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(217, 119, 6, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
     }
     @media print {
       .no-print { display: none !important; }
       .print-only { display: block !important; }
       body { background: white !important; color: black !important; }
-      .qr-print-card { page-break-inside: avoid; border: 2px solid #ccc; margin-bottom: 20px; }
+      .qr-print-card { page-break-inside: avoid; border: 1px solid #e2e8f0; margin-bottom: 20px; box-shadow: none !important; }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-amber-500 selection:text-black">
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 selection:bg-slate-900 selection:text-white">
 
   <!-- ========================================== -->
   <!-- TOP PRESENTATION TOOLBAR (FOR CLIENT DEMO) -->
   <!-- ========================================== -->
-  <header class="no-print sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-amber-500/30 shadow-xl">
+  <header class="no-print sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <!-- Presentation Bar -->
-    <div class="bg-gradient-to-r from-amber-600 via-rose-600 to-amber-700 text-white px-3 py-1.5 text-xs flex flex-wrap items-center justify-between gap-2 shadow-inner">
+    <div class="bg-slate-900 text-white px-3 py-1.5 text-xs flex flex-wrap items-center justify-between gap-2 shadow-inner">
       <div class="flex items-center gap-2 font-medium">
-        <span class="inline-flex items-center justify-center bg-black/30 rounded-full px-2 py-0.5 text-[11px] font-bold">
-          ⭐ DEMO PRESENTATION MODE
+        <span class="inline-flex items-center justify-center bg-white/20 rounded-full px-2 py-0.5 text-[11px] font-bold text-amber-300">
+          ⭐ DEMO PRESENTATION
         </span>
-        <span class="hidden sm:inline opacity-90" id="top-demo-hint">
-          คลิกสลับมุมมองเพื่อนำเสนอลูกค้า: ลูกค้าสั่งอาหาร | จอครัว KDS | ผัง 20 โต๊ะ | หลังบ้านจัดการเมนู
+        <span class="hidden sm:inline text-slate-300 text-[11px]" id="top-demo-hint">
+          สลับมุมมองเพื่อนำเสนอ: ลูกค้าสั่งอาหาร | จอครัว KDS | ผัง 20 โต๊ะ | หลังบ้านจัดการเมนู
         </span>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="testNotificationSound()" title="ทดสอบเสียงกระดิ่งออเดอร์" class="bg-black/30 hover:bg-black/50 text-white px-2.5 py-0.5 rounded flex items-center gap-1 transition">
+        <button onclick="testNotificationSound()" title="ทดสอบเสียงกระดิ่งออเดอร์" class="bg-white/10 hover:bg-white/20 text-slate-200 px-2.5 py-0.5 rounded flex items-center gap-1 transition">
           🔔 <span id="lbl-test-bell">ทดสอบเสียงเตือน</span>
         </button>
-        <button onclick="toggleMobileSimulator()" title="เปิด/ปิด กรอบจำลองหน้าจอมือถือ" class="bg-black/30 hover:bg-black/50 text-white px-2.5 py-0.5 rounded flex items-center gap-1 transition">
+        <button onclick="toggleMobileSimulator()" title="เปิด/ปิด กรอบจำลองหน้าจอมือถือ" class="bg-white/10 hover:bg-white/20 text-slate-200 px-2.5 py-0.5 rounded flex items-center gap-1 transition">
           📱 <span id="lbl-toggle-mobile">กรอบมือถือ</span>
         </button>
-        <button onclick="resetDemoData()" title="รีเซ็ตข้อมูลตัวอย่างทั้งหมด" class="bg-black/30 hover:bg-rose-900 text-white px-2.5 py-0.5 rounded transition">
+        <button onclick="resetDemoData()" title="รีเซ็ตข้อมูลตัวอย่างทั้งหมด" class="bg-white/10 hover:bg-rose-900 text-slate-200 px-2.5 py-0.5 rounded transition">
           🔄 <span id="lbl-reset-data">รีเซ็ตข้อมูล</span>
         </button>
       </div>
@@ -99,41 +98,41 @@
     <!-- Main Navigation & Role Switcher -->
     <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
       <!-- Brand Logo -->
-      <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('customer')">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-600 flex items-center justify-center text-xl shadow-lg shadow-amber-500/20 font-bold text-white">
+      <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchView('customer')">
+        <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-xl shadow-sm text-white">
           🍲
         </div>
         <div>
-          <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
-            <span class="text-amber-400">SHABU & GRILL</span> PALACE
+          <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 flex items-center gap-1">
+            SHABU & GRILL <span class="text-amber-600 font-normal">PALACE</span>
           </h1>
-          <p class="text-[11px] text-slate-400 -mt-0.5">ชาบู & ปิ้งย่าง บุฟเฟต์พรีเมียม & อะลาคาร์ท</p>
+          <p class="text-[11px] text-slate-500 -mt-0.5">ชาบู & ปิ้งย่าง บุฟเฟต์พรีเมียม & อะลาคาร์ท</p>
         </div>
       </div>
 
       <!-- Navigation Tabs (Roles) -->
-      <nav class="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/60 overflow-x-auto max-w-full text-xs sm:text-sm font-medium">
+      <nav class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 overflow-x-auto max-w-full text-xs sm:text-sm font-medium">
         <!-- 1. Customer View -->
-        <button id="nav-btn-customer" onclick="switchView('customer')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-white bg-amber-500 shadow-md font-semibold">
+        <button id="nav-btn-customer" onclick="switchView('customer')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-900 bg-white shadow-sm font-semibold">
           📱 <span data-i18n="nav_customer">ลูกค้าสั่งอาหาร</span>
-          <span id="nav-table-pill" class="bg-black/30 text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-0.5">โต๊ะ 05</span>
+          <span id="nav-table-pill" class="bg-slate-100 text-slate-700 text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-0.5 border border-slate-200">โต๊ะ 05</span>
         </button>
         <!-- 2. Kitchen KDS -->
-        <button id="nav-btn-kitchen" onclick="switchView('kitchen')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-300 hover:text-white hover:bg-slate-700/50">
+        <button id="nav-btn-kitchen" onclick="switchView('kitchen')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-600 hover:text-slate-900 hover:bg-white/60">
           👨‍🍳 <span data-i18n="nav_kitchen">จอครัว & แคชเชียร์</span>
-          <span id="nav-pending-count" class="bg-rose-600 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">1</span>
+          <span id="nav-pending-count" class="bg-rose-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">1</span>
         </button>
         <!-- 3. 20 Tables Management -->
-        <button id="nav-btn-tables" onclick="switchView('tables')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-300 hover:text-white hover:bg-slate-700/50">
+        <button id="nav-btn-tables" onclick="switchView('tables')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-600 hover:text-slate-900 hover:bg-white/60">
           🏢 <span data-i18n="nav_tables">ผัง 20 โต๊ะ</span>
-          <span class="bg-emerald-600/80 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">20</span>
+          <span class="bg-emerald-600 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">20</span>
         </button>
         <!-- 4. QR Code Hub -->
-        <button id="nav-btn-qr" onclick="switchView('qr')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-300 hover:text-white hover:bg-slate-700/50">
+        <button id="nav-btn-qr" onclick="switchView('qr')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-600 hover:text-slate-900 hover:bg-white/60">
           📲 <span data-i18n="nav_qr">QR Code โต๊ะ</span>
         </button>
         <!-- 5. Admin Backoffice -->
-        <button id="nav-btn-admin" onclick="switchView('admin')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-300 hover:text-white hover:bg-slate-700/50">
+        <button id="nav-btn-admin" onclick="switchView('admin')" class="nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-600 hover:text-slate-900 hover:bg-white/60">
           ⚙️ <span data-i18n="nav_admin">จัดการหลังบ้าน</span>
         </button>
       </nav>
@@ -141,23 +140,23 @@
       <!-- Right Controls: Language Selector -->
       <div class="flex items-center gap-2">
         <div class="relative">
-          <div class="flex items-center bg-slate-800 border border-slate-700 rounded-lg p-0.5 text-xs">
-            <button onclick="setLanguage('th')" id="lang-btn-th" class="px-2 py-1 rounded font-medium transition bg-amber-500 text-slate-950 font-bold">
+          <div class="flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5 text-xs">
+            <button onclick="setLanguage('th')" id="lang-btn-th" class="px-2 py-1 rounded font-medium transition bg-white text-slate-950 font-bold shadow-sm">
               🇹🇭 TH
             </button>
-            <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2 py-1 rounded font-medium transition text-slate-300 hover:text-white">
+            <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2 py-1 rounded font-medium transition text-slate-600 hover:text-slate-900">
               🇬🇧 EN
             </button>
-            <button onclick="setLanguage('zh')" id="lang-btn-zh" class="px-2 py-1 rounded font-medium transition text-slate-300 hover:text-white">
+            <button onclick="setLanguage('zh')" id="lang-btn-zh" class="px-2 py-1 rounded font-medium transition text-slate-600 hover:text-slate-900">
               🇨🇳 中文
             </button>
           </div>
         </div>
 
         <!-- Floating Cart Trigger (Visible on Customer View) -->
-        <button id="header-cart-btn" onclick="openCartDrawer()" class="relative bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-lg shadow-amber-500/20 transition active:scale-95">
+        <button id="header-cart-btn" onclick="openCartDrawer()" class="relative bg-slate-900 hover:bg-slate-800 text-white font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm transition active:scale-95">
           🛒 <span data-i18n="cart">ตะกร้า</span>
-          <span id="cart-badge-count" class="bg-rose-600 text-white text-xs px-1.5 py-0.2 rounded-full font-bold ml-0.5">0</span>
+          <span id="cart-badge-count" class="bg-rose-500 text-white text-xs px-1.5 py-0.2 rounded-full font-bold ml-0.5">0</span>
         </button>
       </div>
     </div>
@@ -174,68 +173,68 @@
     <section id="view-customer" class="view-panel block space-y-4">
       
       <!-- Table & Buffet Status Banner -->
-      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-4 border border-amber-500/30 shadow-xl flex flex-wrap items-center justify-between gap-4">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-2xl text-amber-400 font-bold">
+          <div class="w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-xl text-slate-700 font-bold">
             🍽️
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-xs uppercase font-semibold text-amber-400 tracking-wider" data-i18n="current_table">โต๊ะของคุณ</span>
-              <select id="customer-table-select" onchange="changeCustomerTable(this.value)" class="bg-slate-800 text-amber-400 border border-amber-500/40 rounded-lg px-2 py-0.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-amber-500">
+              <span class="text-xs uppercase font-semibold text-slate-500 tracking-wider" data-i18n="current_table">โต๊ะของคุณ</span>
+              <select id="customer-table-select" onchange="changeCustomerTable(this.value)" class="bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-2 py-0.5 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-slate-400">
                 <!-- 20 Tables Options will be generated -->
               </select>
             </div>
-            <div class="text-sm font-semibold text-white mt-0.5 flex items-center gap-2">
+            <div class="text-sm font-bold text-slate-900 mt-0.5 flex items-center gap-2">
               <span id="customer-buffet-package-name">บุฟเฟต์พรีเมียม (Premium Buffet 599฿)</span>
-              <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/30">Active</span>
+              <span class="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full border border-emerald-200 font-semibold">Active</span>
             </div>
           </div>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
           <!-- Buffet Countdown Timer -->
-          <div class="bg-slate-950/80 px-3 py-1.5 rounded-xl border border-slate-700/80 flex items-center gap-2">
-            <span class="text-lg">⏳</span>
+          <div class="bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center gap-2">
+            <span class="text-base">⏳</span>
             <div>
-              <div class="text-[10px] text-slate-400" data-i18n="buffet_timer">เวลาบุฟเฟต์เหลือ</div>
-              <div class="text-sm font-bold text-amber-400" id="buffet-countdown-display">86 นาที 40 วินาที</div>
+              <div class="text-[10px] text-slate-500" data-i18n="buffet_timer">เวลาบุฟเฟต์เหลือ</div>
+              <div class="text-sm font-bold text-amber-700" id="buffet-countdown-display">86 นาที 40 วินาที</div>
             </div>
           </div>
 
           <!-- Order Summary Button / Call Staff -->
-          <button onclick="requestBillModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs px-3 py-2 rounded-xl text-slate-200 flex items-center gap-1.5 transition">
+          <button onclick="requestBillModal()" class="bg-white hover:bg-slate-50 border border-slate-200 text-xs px-3 py-2 rounded-xl text-slate-700 font-medium flex items-center gap-1.5 shadow-sm transition">
             🧾 <span data-i18n="view_bill_call">ดูบิล / เช็คบิล</span>
           </button>
         </div>
       </div>
 
       <!-- Segmented Menu Type Switcher (แยกบุฟเฟต์ และ อะลาคาร์ท ตามโจทย์ข้อ 1) -->
-      <div class="bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+      <div class="bg-white p-2 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 shadow-sm">
         <!-- Main Buffet vs À la Carte Tabs -->
-        <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800/80 w-full sm:w-auto">
-          <button onclick="filterMenuType('all')" id="btn-type-all" class="menu-type-btn flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-semibold transition bg-amber-500 text-slate-950 shadow">
+        <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200 w-full sm:w-auto">
+          <button onclick="filterMenuType('all')" id="btn-type-all" class="menu-type-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-slate-900 shadow-sm">
             ⭐ <span data-i18n="type_all">ทั้งหมด (All)</span>
           </button>
-          <button onclick="filterMenuType('buffet')" id="btn-type-buffet" class="menu-type-btn flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white">
-            🥩 <span data-i18n="type_buffet">บุฟเฟต์ (รวมในแพ็กเกจ 0฿)</span>
-            <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-1.5 py-0.5 rounded-md ml-1 font-bold">ฟรี</span>
+          <button onclick="filterMenuType('buffet')" id="btn-type-buffet" class="menu-type-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900">
+            🥩 <span data-i18n="type_buffet">บุฟเฟต์ (0฿ รวมในคอร์ส)</span>
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] px-1.5 py-0.2 rounded-md ml-1 font-bold">ฟรี</span>
           </button>
-          <button onclick="filterMenuType('alacarte')" id="btn-type-alacarte" class="menu-type-btn flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white">
+          <button onclick="filterMenuType('alacarte')" id="btn-type-alacarte" class="menu-type-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900">
             🍣 <span data-i18n="type_alacarte">อะลาคาร์ทพิเศษ (สั่งแยก)</span>
-            <span class="bg-amber-500/20 text-amber-400 text-[10px] px-1.5 py-0.5 rounded-md ml-1 font-bold">คิดตามราคา</span>
+            <span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.2 rounded-md ml-1 font-bold">คิดตามราคา</span>
           </button>
         </div>
 
         <!-- Search Bar -->
         <div class="relative w-full sm:w-64">
           <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 text-xs">🔍</span>
-          <input type="text" id="menu-search-input" oninput="handleMenuSearch(this.value)" placeholder="ค้นหาเมนูอาหาร..." class="w-full bg-slate-950 border border-slate-700/80 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500">
+          <input type="text" id="menu-search-input" oninput="handleMenuSearch(this.value)" placeholder="ค้นหาเมนูอาหาร..." class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-slate-400">
         </div>
       </div>
 
       <!-- Category Filter Pills -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs" id="category-pills-container">
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs" id="category-pills-container">
         <!-- Will be rendered dynamically: เนื้อ, ซีฟู้ด, ผัก, ซุป, ซูชิ, ของหวาน -->
       </div>
 
@@ -245,10 +244,10 @@
       </div>
 
       <!-- Empty Search Result State -->
-      <div id="customer-empty-menu" class="hidden text-center py-16 bg-slate-900/50 rounded-2xl border border-slate-800">
+      <div id="customer-empty-menu" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
         <div class="text-4xl mb-2">🍽️</div>
-        <p class="text-slate-400 text-sm font-medium" data-i18n="no_food_found">ไม่พบเมนูอาหารที่ค้นหา</p>
-        <button onclick="resetMenuFilters()" class="mt-3 text-xs text-amber-400 hover:underline" data-i18n="clear_filters">ล้างตัวกรองทั้งหมด</button>
+        <p class="text-slate-600 text-sm font-medium" data-i18n="no_food_found">ไม่พบเมนูอาหารที่ค้นหา</p>
+        <button onclick="resetMenuFilters()" class="mt-3 text-xs text-amber-600 hover:underline font-semibold" data-i18n="clear_filters">ล้างตัวกรองทั้งหมด</button>
       </div>
 
     </section>
@@ -258,33 +257,33 @@
     <!-- ========================================== -->
     <section id="view-kitchen" class="view-panel hidden space-y-4">
       <!-- Kitchen Header Banner -->
-      <div class="bg-slate-900 rounded-2xl p-4 border border-rose-500/30 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-2xl text-rose-400 font-bold">
+          <div class="w-11 h-11 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-xl text-rose-600 font-bold">
             👨‍🍳
           </div>
           <div>
-            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
               <span data-i18n="kds_title">ระบบจอครัว & แจ้งเตือนออเดอร์สด (Kitchen Display System)</span>
-              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/40">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
                 🔴 Live Feed
               </span>
             </h2>
-            <p class="text-xs text-slate-400" data-i18n="kds_desc">รับออเดอร์จากลูกค้าทันที พร้อมเสียงเตือนกระดิ่ง และอัปเดตสถานะการปรุงอาหาร</p>
+            <p class="text-xs text-slate-500" data-i18n="kds_desc">รับออเดอร์จากลูกค้าทันที พร้อมเสียงเตือนกระดิ่ง และอัปเดตสถานะการปรุงอาหาร</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
           <!-- Sound Toggle Button -->
-          <button id="btn-sound-toggle" onclick="toggleAudioNotifications()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs px-3 py-2 rounded-xl text-slate-200 flex items-center gap-1.5 transition">
+          <button id="btn-sound-toggle" onclick="toggleAudioNotifications()" class="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs px-3 py-2 rounded-xl text-slate-700 flex items-center gap-1.5 transition">
             🔊 <span id="lbl-sound-status">เสียงเตือน: เปิดอยู่</span>
           </button>
           <!-- Quick Status Filter -->
-          <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-            <button onclick="filterKdsStatus('all')" id="kds-tab-all" class="px-2.5 py-1 rounded-lg font-medium text-slate-950 bg-amber-500 font-bold">ทั้งหมด</button>
-            <button onclick="filterKdsStatus('pending')" id="kds-tab-pending" class="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white">รอดำเนินการ</button>
-            <button onclick="filterKdsStatus('cooking')" id="kds-tab-cooking" class="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white">กำลังปรุง</button>
-            <button onclick="filterKdsStatus('served')" id="kds-tab-served" class="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white">เสิร์ฟแล้ว</button>
+          <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+            <button onclick="filterKdsStatus('all')" id="kds-tab-all" class="px-2.5 py-1 rounded-lg font-medium text-slate-900 bg-white font-bold shadow-sm">ทั้งหมด</button>
+            <button onclick="filterKdsStatus('pending')" id="kds-tab-pending" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900">รอดำเนินการ</button>
+            <button onclick="filterKdsStatus('cooking')" id="kds-tab-cooking" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900">กำลังปรุง</button>
+            <button onclick="filterKdsStatus('served')" id="kds-tab-served" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900">เสิร์ฟแล้ว</button>
           </div>
         </div>
       </div>
@@ -294,9 +293,9 @@
         <!-- Live order cards rendered here -->
       </div>
 
-      <div id="kitchen-empty-orders" class="hidden text-center py-16 bg-slate-900/40 rounded-2xl border border-slate-800/80">
+      <div id="kitchen-empty-orders" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
         <div class="text-5xl mb-3">✨</div>
-        <p class="text-slate-300 font-semibold text-sm">ไม่มีออเดอร์ค้างในครัวขณะนี้</p>
+        <p class="text-slate-700 font-bold text-sm">ไม่มีออเดอร์ค้างในครัวขณะนี้</p>
         <p class="text-xs text-slate-500 mt-1">เมื่อลูกค้าสแกนสั่งอาหารจากโต๊ะ บัตรออเดอร์จะแสดงขึ้นที่นี่พร้อมเสียงแจ้งเตือนอัตโนมัติ</p>
       </div>
     </section>
@@ -306,26 +305,26 @@
     <!-- ========================================== -->
     <section id="view-tables" class="view-panel hidden space-y-4">
       <!-- Tables Header -->
-      <div class="bg-slate-900 rounded-2xl p-4 border border-emerald-500/30 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-2xl text-emerald-400 font-bold">
+          <div class="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-xl text-emerald-600 font-bold">
             🏢
           </div>
           <div>
-            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
               <span data-i18n="tables_management_title">ระบบผังและสถานะร้าน 20 โต๊ะ (Table Management)</span>
-              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700">1 - 20 โต๊ะ</span>
+              <span class="text-xs bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full border border-slate-200 font-medium">1 - 20 โต๊ะ</span>
             </h2>
-            <p class="text-xs text-slate-400" data-i18n="tables_desc">คลิกที่โต๊ะเพื่อดูประวัติออเดอร์, ยอดเงินรวม, จัดการเวลาบุฟเฟต์, หรือสั่งอาหารแทนลูกค้า</p>
+            <p class="text-xs text-slate-500" data-i18n="tables_desc">คลิกที่โต๊ะเพื่อดูประวัติออเดอร์, ยอดเงินรวม, จัดการเวลาบุฟเฟต์, หรือสั่งอาหารแทนลูกค้า</p>
           </div>
         </div>
 
         <!-- Legend -->
-        <div class="flex flex-wrap items-center gap-3 text-xs">
-          <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> ว่าง (Available)</span>
-          <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-500"></span> กำลังทาน (Dining)</span>
-          <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></span> ออเดอร์ใหม่ (New Order)</span>
-          <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-purple-500"></span> ขอเช็คบิล (Bill Requested)</span>
+        <div class="flex flex-wrap items-center gap-3 text-xs text-slate-600">
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> ว่าง (Available)</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> กำลังทาน (Dining)</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span> ออเดอร์ใหม่ (New Order)</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> ขอเช็คบิล (Bill Requested)</span>
         </div>
       </div>
 
@@ -339,38 +338,38 @@
     <!-- VIEW 4: QR CODE HUB & PRINT (ข้อ 6) -->
     <!-- ========================================== -->
     <section id="view-qr" class="view-panel hidden space-y-4">
-      <div class="bg-slate-900 rounded-2xl p-4 border border-amber-500/30 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-2xl text-amber-400 font-bold">
+          <div class="w-11 h-11 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-xl text-amber-700 font-bold">
             📲
           </div>
           <div>
-            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
               <span data-i18n="qr_hub_title">ศูนย์สร้างและพิมพ์ QR Code สั่งอาหาร (โต๊ะ 1 - 20)</span>
             </h2>
-            <p class="text-xs text-slate-400" data-i18n="qr_hub_desc">พิมพ์ป้ายตั้งโต๊ะสำหรับลูกค้านำมือถือมาสแกน หรือคลิกเพื่อทดสอบเข้าใช้งานทันที</p>
+            <p class="text-xs text-slate-500" data-i18n="qr_hub_desc">พิมพ์ป้ายตั้งโต๊ะสำหรับลูกค้านำมือถือมาสแกน หรือคลิกเพื่อทดสอบเข้าใช้งานทันที</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
           <!-- Print All Standees Button -->
-          <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow transition">
+          <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-sm transition">
             🖨️ <span data-i18n="print_all_qr">พิมพ์ป้ายตั้งโต๊ะทั้งหมด (Print 20 Tables)</span>
           </button>
           <!-- Camera Scan Simulator -->
-          <button onclick="openScanSimulatorModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs px-3 py-2 rounded-xl text-slate-200 flex items-center gap-1.5 transition">
+          <button onclick="openScanSimulatorModal()" class="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs px-3 py-2 rounded-xl text-slate-700 font-medium flex items-center gap-1.5 transition">
             📷 <span data-i18n="simulate_camera">จำลองการสแกนกล้อง</span>
           </button>
         </div>
       </div>
 
       <!-- Quick IP Notice -->
-      <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 flex items-center justify-between">
+      <div class="bg-slate-100 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="text-base">💡</span>
           <span><strong>สแกนด้วยมือถือจริง:</strong> สแกน QR Code ด้านล่างนี้ผ่านมือถือของคุณ เพื่อทดลองสั่งอาหารในระบบจำลองสดได้ทันที</span>
         </div>
-        <span id="current-host-badge" class="bg-slate-900 px-2 py-1 rounded text-amber-400 font-mono text-[11px] border border-slate-700"></span>
+        <span id="current-host-badge" class="bg-white px-2 py-1 rounded text-slate-800 font-mono text-[11px] border border-slate-200"></span>
       </div>
 
       <!-- QR Cards Grid for 20 Tables -->
@@ -384,36 +383,36 @@
     <!-- ========================================== -->
     <section id="view-admin" class="view-panel hidden space-y-4">
       <!-- Admin Header -->
-      <div class="bg-slate-900 rounded-2xl p-4 border border-indigo-500/30 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-2xl text-indigo-400 font-bold">
+          <div class="w-11 h-11 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-xl text-indigo-600 font-bold">
             ⚙️
           </div>
           <div>
-            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
               <span data-i18n="admin_title">ระบบจัดการหลังบ้าน (Menu & Price Backoffice)</span>
-              <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 px-2 py-0.5 rounded-full">CMS Admin</span>
+              <span class="text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded-full font-semibold">CMS Admin</span>
             </h2>
-            <p class="text-xs text-slate-400" data-i18n="admin_desc">เพิ่ม, ลบ, แก้ไข เมนูอาหาร, ปรับเปลี่ยนราคา, และเปิด/ปิดสถานะสินค้าหมด</p>
+            <p class="text-xs text-slate-500" data-i18n="admin_desc">เพิ่ม, ลบ, แก้ไข เมนูอาหาร, ปรับเปลี่ยนราคา, และเปิด/ปิดสถานะสินค้าหมด</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="openAddMenuModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow transition">
+          <button onclick="openAddMenuModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-sm transition">
             ➕ <span data-i18n="add_new_menu">เพิ่มเมนูอาหารใหม่</span>
           </button>
-          <button onclick="resetDemoData()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs px-3 py-2 rounded-xl text-slate-300 flex items-center gap-1.5 transition">
+          <button onclick="resetDemoData()" class="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs px-3 py-2 rounded-xl text-slate-700 flex items-center gap-1.5 transition">
             🔄 <span data-i18n="restore_defaults">คืนค่าเริ่มต้น</span>
           </button>
         </div>
       </div>
 
       <!-- Admin Menu Table -->
-      <div class="bg-slate-900/90 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
-        <div class="p-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+        <div class="p-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-2 text-xs">
-            <span class="text-slate-400">กรองประเภท:</span>
-            <select id="admin-filter-type" onchange="filterAdminTable()" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-white focus:outline-none">
+            <span class="text-slate-600">กรองประเภท:</span>
+            <select id="admin-filter-type" onchange="filterAdminTable()" class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-slate-800 focus:outline-none">
               <option value="all">ทั้งหมด (All)</option>
               <option value="buffet">เฉพาะ บุฟเฟต์ (Buffet Only)</option>
               <option value="alacarte">เฉพาะ อะลาคาร์ท (À la Carte Only)</option>
@@ -421,13 +420,13 @@
           </div>
 
           <div class="w-full sm:w-64">
-            <input type="text" id="admin-search-input" oninput="filterAdminTable()" placeholder="ค้นหาชื่ออาหาร..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1 text-xs text-white placeholder-slate-500 focus:outline-none">
+            <input type="text" id="admin-search-input" oninput="filterAdminTable()" placeholder="ค้นหาชื่ออาหาร..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white">
           </div>
         </div>
 
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-300">
-            <thead class="bg-slate-950/80 text-slate-400 uppercase font-semibold text-[11px] border-b border-slate-800">
+          <table class="w-full text-left text-xs text-slate-700">
+            <thead class="bg-slate-50 text-slate-600 uppercase font-semibold text-[11px] border-b border-slate-200">
               <tr>
                 <th class="px-4 py-3">รูปภาพ</th>
                 <th class="px-4 py-3">ชื่ออาหาร (ไทย / EN / 中文)</th>
@@ -438,7 +437,7 @@
                 <th class="px-4 py-3 text-right">จัดการ</th>
               </tr>
             </thead>
-            <tbody id="admin-menu-tbody" class="divide-y divide-slate-800">
+            <tbody id="admin-menu-tbody" class="divide-y divide-slate-100">
               <!-- Admin table rows rendered dynamically -->
             </tbody>
           </table>
@@ -451,18 +450,18 @@
   <!-- ========================================== -->
   <!-- FLOATING CART DRAWER (ตะกร้าสั่งอาหาร)    -->
   <!-- ========================================== -->
-  <div id="cart-drawer-overlay" onclick="closeCartDrawer()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden transition-opacity"></div>
-  <aside id="cart-drawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+  <div id="cart-drawer-overlay" onclick="closeCartDrawer()" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+  <aside id="cart-drawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white border-l border-slate-200 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
     <!-- Cart Header -->
-    <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+    <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <span class="text-xl">🛒</span>
         <div>
-          <h3 class="font-bold text-white text-base" data-i18n="cart_title">ตะกร้าสั่งอาหาร</h3>
-          <p class="text-xs text-amber-400 font-medium" id="cart-table-label">โต๊ะ 05</p>
+          <h3 class="font-bold text-slate-900 text-base" data-i18n="cart_title">ตะกร้าสั่งอาหาร</h3>
+          <p class="text-xs text-amber-700 font-semibold" id="cart-table-label">โต๊ะ 05</p>
         </div>
       </div>
-      <button onclick="closeCartDrawer()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-sm">✕</button>
+      <button onclick="closeCartDrawer()" class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center text-sm">✕</button>
     </div>
 
     <!-- Cart Items List (Separated Buffet vs À la Carte) -->
@@ -471,31 +470,31 @@
     </div>
 
     <!-- Cart Footer & Checkout -->
-    <div class="p-4 bg-slate-950 border-t border-slate-800 space-y-3">
+    <div class="p-4 bg-slate-50 border-t border-slate-200 space-y-3">
       <!-- Special Note to Chef -->
       <div>
-        <label class="block text-[11px] text-slate-400 mb-1" data-i18n="order_note_label">หมายเหตุถึงครัว (เช่น ไม่ใส่ต้นหอม / ขอพริกเพิ่ม):</label>
-        <input type="text" id="order-special-note" placeholder="ข้อความถึงครัว..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+        <label class="block text-[11px] text-slate-600 mb-1 font-medium" data-i18n="order_note_label">หมายเหตุถึงครัว (เช่น ไม่ใส่ต้นหอม / ขอพริกเพิ่ม):</label>
+        <input type="text" id="order-special-note" placeholder="ข้อความถึงครัว..." class="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-400">
       </div>
 
       <!-- Price Breakdown -->
-      <div class="space-y-1 text-xs border-t border-slate-800/80 pt-2">
-        <div class="flex justify-between text-slate-400">
+      <div class="space-y-1 text-xs border-t border-slate-200 pt-2">
+        <div class="flex justify-between text-slate-600">
           <span data-i18n="buffet_items_subtotal">รายการบุฟเฟต์:</span>
-          <span class="text-emerald-400 font-bold" id="cart-buffet-total-label">0 ฿ (ฟรีในแพ็กเกจ)</span>
+          <span class="text-emerald-700 font-bold" id="cart-buffet-total-label">0 ฿ (ฟรีในแพ็กเกจ)</span>
         </div>
-        <div class="flex justify-between text-slate-400">
+        <div class="flex justify-between text-slate-600">
           <span data-i18n="alacarte_items_subtotal">รายการอะลาคาร์ท:</span>
-          <span class="text-amber-400 font-bold" id="cart-alacarte-total-label">฿ 0</span>
+          <span class="text-amber-700 font-bold" id="cart-alacarte-total-label">฿ 0</span>
         </div>
-        <div class="flex justify-between text-sm font-bold text-white pt-1 border-t border-slate-800">
+        <div class="flex justify-between text-sm font-bold text-slate-900 pt-1 border-t border-slate-200">
           <span data-i18n="cart_total_payable">ยอดรวมรอบนี้:</span>
-          <span class="text-amber-400 text-base" id="cart-grand-total">฿ 0</span>
+          <span class="text-amber-700 text-base font-extrabold" id="cart-grand-total">฿ 0</span>
         </div>
       </div>
 
       <!-- Submit Order Button -->
-      <button id="btn-submit-order" onclick="submitTableOrder()" class="w-full bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-slate-950 font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 active:scale-98 transition">
+      <button id="btn-submit-order" onclick="submitTableOrder()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-sm active:scale-98 transition">
         <span>🚀</span> <span data-i18n="confirm_order_btn">ยืนยันการสั่งอาหาร (Send to Kitchen)</span>
       </button>
     </div>
@@ -504,40 +503,40 @@
   <!-- ========================================== -->
   <!-- MODAL: FOOD ITEM DETAIL (ข้อ 2)           -->
   <!-- ========================================== -->
-  <div id="modal-food-detail" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-      <div class="relative h-56 bg-slate-950">
+  <div id="modal-food-detail" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+      <div class="relative h-56 bg-slate-100">
         <img id="detail-food-img" src="" alt="Food" class="w-full h-full object-cover">
-        <button onclick="closeFoodDetailModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center text-sm backdrop-blur-sm">✕</button>
-        <span id="detail-food-badge" class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-950"></span>
+        <button onclick="closeFoodDetailModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 text-slate-800 hover:bg-white flex items-center justify-center text-sm shadow">✕</button>
+        <span id="detail-food-badge" class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm"></span>
       </div>
       <div class="p-5 space-y-4">
         <div>
           <div class="flex justify-between items-start gap-2">
-            <h3 id="detail-food-name" class="text-lg font-bold text-white"></h3>
-            <span id="detail-food-price" class="text-amber-400 font-bold text-lg"></span>
+            <h3 id="detail-food-name" class="text-lg font-bold text-slate-900"></h3>
+            <span id="detail-food-price" class="text-amber-700 font-bold text-lg"></span>
           </div>
-          <p id="detail-food-desc" class="text-xs text-slate-400 mt-1"></p>
+          <p id="detail-food-desc" class="text-xs text-slate-500 mt-1"></p>
         </div>
 
         <!-- Custom Options: Spice Level -->
         <div class="space-y-1.5">
-          <label class="text-xs font-semibold text-slate-300" data-i18n="spice_level">ระดับความเผ็ด:</label>
+          <label class="text-xs font-semibold text-slate-700" data-i18n="spice_level">ระดับความเผ็ด:</label>
           <div class="grid grid-cols-3 gap-2 text-xs">
-            <button onclick="setDetailSpice(0)" id="spice-btn-0" class="spice-opt-btn py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 font-medium">ไม่เผ็ด (Mild)</button>
-            <button onclick="setDetailSpice(1)" id="spice-btn-1" class="spice-opt-btn py-1.5 rounded-lg border border-amber-500 bg-amber-500/20 text-amber-400 font-bold">เผ็ดกลาง 🌶️</button>
-            <button onclick="setDetailSpice(2)" id="spice-btn-2" class="spice-opt-btn py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 font-medium">เผ็ดมาก 🌶️🌶️</button>
+            <button onclick="setDetailSpice(0)" id="spice-btn-0" class="spice-opt-btn py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 font-medium">ไม่เผ็ด (Mild)</button>
+            <button onclick="setDetailSpice(1)" id="spice-btn-1" class="spice-opt-btn py-1.5 rounded-lg border border-amber-500 bg-amber-50 text-amber-800 font-bold">เผ็ดกลาง 🌶️</button>
+            <button onclick="setDetailSpice(2)" id="spice-btn-2" class="spice-opt-btn py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 font-medium">เผ็ดมาก 🌶️🌶️</button>
           </div>
         </div>
 
         <!-- Portion / Quantity Selector -->
-        <div class="flex items-center justify-between pt-2 border-t border-slate-800">
-          <div class="flex items-center border border-slate-700 rounded-xl bg-slate-950 p-1">
-            <button onclick="changeDetailQty(-1)" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-center">-</button>
-            <span id="detail-food-qty" class="w-10 text-center font-bold text-white text-sm">1</span>
-            <button onclick="changeDetailQty(1)" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-center">+</button>
+        <div class="flex items-center justify-between pt-2 border-t border-slate-200">
+          <div class="flex items-center border border-slate-200 rounded-xl bg-slate-50 p-1">
+            <button onclick="changeDetailQty(-1)" class="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold flex items-center justify-center text-xs shadow-sm">-</button>
+            <span id="detail-food-qty" class="w-10 text-center font-bold text-slate-900 text-sm">1</span>
+            <button onclick="changeDetailQty(1)" class="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-bold flex items-center justify-center text-xs shadow-sm">+</button>
           </div>
-          <button id="detail-add-cart-btn" onclick="addDetailToCart()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-lg transition">
+          <button id="detail-add-cart-btn" onclick="addDetailToCart()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-sm transition">
             🛒 <span data-i18n="add_to_cart_btn">เพิ่มลงตะกร้า</span>
           </button>
         </div>
@@ -548,18 +547,18 @@
   <!-- ========================================== -->
   <!-- MODAL: TABLE DETAIL & BILLING (ข้อ 7)      -->
   <!-- ========================================== -->
-  <div id="modal-table-detail" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+  <div id="modal-table-detail" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
       <!-- Header -->
-      <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+      <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="text-2xl">🏢</span>
           <div>
-            <h3 id="table-modal-title" class="font-bold text-white text-base">โต๊ะ 01 - รายละเอียดบิล</h3>
+            <h3 id="table-modal-title" class="font-bold text-slate-900 text-base">โต๊ะ 01 - รายละเอียดบิล</h3>
             <span id="table-modal-status-badge" class="text-[10px] px-2 py-0.5 rounded-full font-bold"></span>
           </div>
         </div>
-        <button onclick="closeTableDetailModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-sm">✕</button>
+        <button onclick="closeTableDetailModal()" class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center text-sm">✕</button>
       </div>
 
       <!-- Content -->
@@ -568,7 +567,7 @@
       </div>
 
       <!-- Footer Actions -->
-      <div class="p-4 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2" id="table-modal-actions">
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2" id="table-modal-actions">
         <!-- Action buttons like Checkout, Add 15 mins, Order for Table -->
       </div>
     </div>
@@ -577,35 +576,35 @@
   <!-- ========================================== -->
   <!-- MODAL: ADD / EDIT MENU (ข้อ 4)            -->
   <!-- ========================================== -->
-  <div id="modal-admin-menu" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl">
-      <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
-        <h3 id="admin-modal-title" class="font-bold text-white text-base">เพิ่มเมนูอาหารใหม่</h3>
-        <button onclick="closeAdminMenuModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-sm">✕</button>
+  <div id="modal-admin-menu" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl">
+      <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+        <h3 id="admin-modal-title" class="font-bold text-slate-900 text-base">เพิ่มเมนูอาหารใหม่</h3>
+        <button onclick="closeAdminMenuModal()" class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center text-sm">✕</button>
       </div>
       <form id="admin-menu-form" onsubmit="handleAdminMenuSubmit(event)" class="p-5 space-y-3 text-xs">
         <input type="hidden" id="menu-form-id">
         
         <div>
-          <label class="block text-slate-400 mb-1">ชื่ออาหาร (ไทย) *</label>
-          <input type="text" id="menu-form-name-th" required placeholder="เช่น เนื้อวากิวพรีเมียม" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+          <label class="block text-slate-700 font-medium mb-1">ชื่ออาหาร (ไทย) *</label>
+          <input type="text" id="menu-form-name-th" required placeholder="เช่น เนื้อวากิวพรีเมียม" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:bg-white focus:ring-1 focus:ring-slate-400">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-slate-400 mb-1">ชื่ออาหาร (English) *</label>
-            <input type="text" id="menu-form-name-en" required placeholder="e.g. Premium Wagyu Beef" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+            <label class="block text-slate-700 font-medium mb-1">ชื่ออาหาร (English) *</label>
+            <input type="text" id="menu-form-name-en" required placeholder="e.g. Premium Wagyu Beef" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:bg-white focus:ring-1 focus:ring-slate-400">
           </div>
           <div>
-            <label class="block text-slate-400 mb-1">ชื่ออาหาร (中文) *</label>
-            <input type="text" id="menu-form-name-zh" required placeholder="例如：特级和牛" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+            <label class="block text-slate-700 font-medium mb-1">ชื่ออาหาร (中文) *</label>
+            <input type="text" id="menu-form-name-zh" required placeholder="例如：特级和牛" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:bg-white focus:ring-1 focus:ring-slate-400">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-slate-400 mb-1">หมวดหมู่ *</label>
-            <select id="menu-form-category" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none">
+            <label class="block text-slate-700 font-medium mb-1">หมวดหมู่ *</label>
+            <select id="menu-form-category" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:bg-white">
               <option value="meat">🥩 เนื้อวัว & หมูพรีเมียม</option>
               <option value="seafood">🦐 อาหารทะเลสด</option>
               <option value="soup_sides">🍲 น้ำซุป & ลูกชิ้น</option>
@@ -615,8 +614,8 @@
             </select>
           </div>
           <div>
-            <label class="block text-slate-400 mb-1">ประเภทอาหาร *</label>
-            <select id="menu-form-type" onchange="toggleFormPriceInput(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none">
+            <label class="block text-slate-700 font-medium mb-1">ประเภทอาหาร *</label>
+            <select id="menu-form-type" onchange="toggleFormPriceInput(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:bg-white">
               <option value="buffet">บุฟเฟต์ (รวมในแพ็กเกจ 0฿)</option>
               <option value="alacarte">อะลาคาร์ท (คิดราคาแยก)</option>
             </select>
@@ -624,32 +623,32 @@
         </div>
 
         <div id="menu-form-price-group" class="hidden">
-          <label class="block text-slate-400 mb-1">ราคาอะลาคาร์ท (บาท ฿) *</label>
-          <input type="number" id="menu-form-price" min="0" placeholder="เช่น 390" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none">
+          <label class="block text-slate-700 font-medium mb-1">ราคาอะลาคาร์ท (บาท ฿) *</label>
+          <input type="number" id="menu-form-price" min="0" placeholder="เช่น 390" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:bg-white">
         </div>
 
         <div>
-          <label class="block text-slate-400 mb-1">URL รูปภาพ</label>
-          <input type="url" id="menu-form-image" placeholder="https://images.unsplash.com/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none mb-1.5">
+          <label class="block text-slate-700 font-medium mb-1">URL รูปภาพ</label>
+          <input type="url" id="menu-form-image" placeholder="https://images.unsplash.com/..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:bg-white mb-1.5">
           <!-- Preset Image Buttons -->
           <div class="flex flex-wrap items-center gap-1.5 text-[10px]">
             <span class="text-slate-500">เลือกภาพด่วน:</span>
-            <button type="button" onclick="setPresetFormImage('wagyu')" class="bg-slate-800 px-2 py-0.5 rounded text-amber-400 hover:bg-slate-700">เนื้อวากิว</button>
-            <button type="button" onclick="setPresetFormImage('salmon')" class="bg-slate-800 px-2 py-0.5 rounded text-amber-400 hover:bg-slate-700">แซลมอน</button>
-            <button type="button" onclick="setPresetFormImage('prawn')" class="bg-slate-800 px-2 py-0.5 rounded text-amber-400 hover:bg-slate-700">กุ้งเผา</button>
-            <button type="button" onclick="setPresetFormImage('soup')" class="bg-slate-800 px-2 py-0.5 rounded text-amber-400 hover:bg-slate-700">หม้อชาบู</button>
-            <button type="button" onclick="setPresetFormImage('dessert')" class="bg-slate-800 px-2 py-0.5 rounded text-amber-400 hover:bg-slate-700">ของหวาน</button>
+            <button type="button" onclick="setPresetFormImage('wagyu')" class="bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-700 hover:bg-slate-200">เนื้อวากิว</button>
+            <button type="button" onclick="setPresetFormImage('salmon')" class="bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-700 hover:bg-slate-200">แซลมอน</button>
+            <button type="button" onclick="setPresetFormImage('prawn')" class="bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-700 hover:bg-slate-200">กุ้งเผา</button>
+            <button type="button" onclick="setPresetFormImage('soup')" class="bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-700 hover:bg-slate-200">หม้อชาบู</button>
+            <button type="button" onclick="setPresetFormImage('dessert')" class="bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-700 hover:bg-slate-200">ของหวาน</button>
           </div>
         </div>
 
         <div class="flex items-center gap-2 pt-2">
-          <input type="checkbox" id="menu-form-available" checked class="w-4 h-4 rounded text-amber-500 focus:ring-amber-500">
-          <label for="menu-form-available" class="text-slate-300 font-medium">พร้อมจำหน่าย (In Stock)</label>
+          <input type="checkbox" id="menu-form-available" checked class="w-4 h-4 rounded text-slate-900 focus:ring-slate-900">
+          <label for="menu-form-available" class="text-slate-800 font-medium">พร้อมจำหน่าย (In Stock)</label>
         </div>
 
-        <div class="pt-3 border-t border-slate-800 flex justify-end gap-2">
-          <button type="button" onclick="closeAdminMenuModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700">ยกเลิก</button>
-          <button type="submit" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow">บันทึกข้อมูล</button>
+        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
+          <button type="button" onclick="closeAdminMenuModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200">ยกเลิก</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold shadow-sm">บันทึกข้อมูล</button>
         </div>
       </form>
     </div>
@@ -658,29 +657,29 @@
   <!-- ========================================== -->
   <!-- MODAL: CAMERA SCANNER SIMULATOR (ข้อ 6)    -->
   <!-- ========================================== -->
-  <div id="modal-scan-simulator" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl text-center p-5 space-y-4">
+  <div id="modal-scan-simulator" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl text-center p-5 space-y-4">
       <div class="flex justify-between items-center">
-        <h3 class="font-bold text-white text-base">📷 จำลองการสแกนกล้องมือถือ</h3>
-        <button onclick="closeScanSimulatorModal()" class="text-slate-400 hover:text-white">✕</button>
+        <h3 class="font-bold text-slate-900 text-base">📷 จำลองการสแกนกล้องมือถือ</h3>
+        <button onclick="closeScanSimulatorModal()" class="text-slate-400 hover:text-slate-800">✕</button>
       </div>
 
       <!-- Viewfinder Mockup -->
-      <div class="relative w-full aspect-square bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center border-2 border-dashed border-amber-500/50">
+      <div class="relative w-full aspect-square bg-slate-50 rounded-2xl overflow-hidden flex items-center justify-center border-2 border-dashed border-slate-300">
         <!-- Laser Scanner Bar Animation -->
-        <div class="absolute inset-x-4 top-1/2 h-0.5 bg-amber-400 shadow-[0_0_12px_#f59e0b] animate-bounce"></div>
-        <div class="text-slate-400 text-xs px-4">
+        <div class="absolute inset-x-4 top-1/2 h-0.5 bg-amber-500 shadow-[0_0_8px_#d97706] animate-bounce"></div>
+        <div class="text-slate-500 text-xs px-4">
           <div class="text-4xl mb-2">🎯</div>
           <div>กำลังเล็ง QR Code โต๊ะอาหาร...</div>
         </div>
       </div>
 
-      <p class="text-xs text-slate-400">เลือกโต๊ะที่ต้องการจำลองการสแกน:</p>
+      <p class="text-xs text-slate-600">เลือกโต๊ะที่ต้องการจำลองการสแกน:</p>
       <div class="grid grid-cols-4 gap-2">
-        <button onclick="simulateScanTable(1)" class="py-1.5 bg-slate-800 hover:bg-amber-500 hover:text-black rounded-lg text-xs font-bold text-white transition">โต๊ะ 01</button>
-        <button onclick="simulateScanTable(2)" class="py-1.5 bg-slate-800 hover:bg-amber-500 hover:text-black rounded-lg text-xs font-bold text-white transition">โต๊ะ 02</button>
-        <button onclick="simulateScanTable(5)" class="py-1.5 bg-slate-800 hover:bg-amber-500 hover:text-black rounded-lg text-xs font-bold text-white transition">โต๊ะ 05</button>
-        <button onclick="simulateScanTable(10)" class="py-1.5 bg-slate-800 hover:bg-amber-500 hover:text-black rounded-lg text-xs font-bold text-white transition">โต๊ะ 10</button>
+        <button onclick="simulateScanTable(1)" class="py-1.5 bg-slate-100 hover:bg-slate-900 hover:text-white rounded-lg text-xs font-bold text-slate-800 transition">โต๊ะ 01</button>
+        <button onclick="simulateScanTable(2)" class="py-1.5 bg-slate-100 hover:bg-slate-900 hover:text-white rounded-lg text-xs font-bold text-slate-800 transition">โต๊ะ 02</button>
+        <button onclick="simulateScanTable(5)" class="py-1.5 bg-slate-100 hover:bg-slate-900 hover:text-white rounded-lg text-xs font-bold text-slate-800 transition">โต๊ะ 05</button>
+        <button onclick="simulateScanTable(10)" class="py-1.5 bg-slate-100 hover:bg-slate-900 hover:text-white rounded-lg text-xs font-bold text-slate-800 transition">โต๊ะ 10</button>
       </div>
     </div>
   </div>
@@ -855,19 +854,17 @@
 
     function setLanguage(lang) {
       currentLang = lang;
-      // Update UI active buttons
       ['th', 'en', 'zh'].forEach(l => {
         const btn = document.getElementById(`lang-btn-${l}`);
         if (btn) {
           if (l === lang) {
-            btn.className = "px-2 py-1 rounded font-medium transition bg-amber-500 text-slate-950 font-bold";
+            btn.className = "px-2 py-1 rounded font-medium transition bg-white text-slate-950 font-bold shadow-sm";
           } else {
-            btn.className = "px-2 py-1 rounded font-medium transition text-slate-300 hover:text-white";
+            btn.className = "px-2 py-1 rounded font-medium transition text-slate-600 hover:text-slate-900";
           }
         }
       });
 
-      // Update text in DOM with data-i18n
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (I18N[currentLang] && I18N[currentLang][key]) {
@@ -875,7 +872,6 @@
         }
       });
 
-      // Re-render components that depend on language
       renderCustomerMenu();
       renderKitchenOrders();
       renderTablesGrid();
@@ -952,7 +948,7 @@
         nameEn: 'A5 Wagyu Ribeye Cut (Signature)',
         nameZh: '特级A5霜降和牛肋眼',
         category: 'meat',
-        type: 'alacarte', // อะลาคาร์ท
+        type: 'alacarte',
         price: 490,
         image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80',
         descTh: 'วากิว A5 แท้จากญี่ปุ่น ลายหินอ่อนระดับ 10 สัมผัสดั่งเนย',
@@ -1010,7 +1006,7 @@
         nameEn: 'Hokkaido Snow Crab Legs',
         nameZh: '北海道雪蟹腿',
         category: 'seafood',
-        type: 'alacarte', // อะลาคาร์ท
+        type: 'alacarte',
         price: 690,
         image: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80',
         descTh: 'ปูหิมะหวานฉ่ำ ส่งตรงจากฮอกไกโด เสิร์ฟพร้อมน้ำจิ้มซีฟู้ดมะนาวสด',
@@ -1025,7 +1021,7 @@
         nameEn: 'Norway Salmon Sashimi Platter',
         nameZh: '挪威三文鱼刺身拼盘',
         category: 'seafood',
-        type: 'alacarte', // อะลาคาร์ท
+        type: 'alacarte',
         price: 320,
         image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&auto=format&fit=crop&q=80',
         descTh: 'แซลมอนสดนำเข้าจากนอร์เวย์ หั่นชิ้นหนาฉ่ำ เต็มคำ',
@@ -1155,7 +1151,7 @@
         nameEn: 'Häagen-Dazs Truffle Ice Cream',
         nameZh: '哈根达斯特级松露冰淇淋',
         category: 'dessert_drinks',
-        type: 'alacarte', // อะลาคาร์ท
+        type: 'alacarte',
         price: 120,
         image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&auto=format&fit=crop&q=80',
         descTh: 'ไอศกรีมพรีเมียมกลิ่นหอมเห็ดทรัฟเฟิล เสิร์ฟพร้อมโคนวาฟเฟิลกรอบ',
@@ -1183,7 +1179,7 @@
         nameEn: 'Asahi / Singha Draft Beer Pitcher',
         nameZh: '朝日/狮牌特酿生啤酒 (扎)',
         category: 'dessert_drinks',
-        type: 'alacarte', // อะลาคาร์ท
+        type: 'alacarte',
         price: 240,
         image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=600&auto=format&fit=crop&q=80',
         descTh: 'เบียร์สดเย็นฉ่ำ ฟองนุ่ม สดชื่นเข้ากับชาบูและปิ้งย่าง',
@@ -1197,11 +1193,11 @@
     // 3. STATE MANAGEMENT & REAL-TIME SYNC
     // ==========================================
     let menuItems = JSON.parse(localStorage.getItem('buffet_menu')) || DEFAULT_MENU;
-    let currentTable = 'T05'; // Default customer table
-    let selectedMenuType = 'all'; // all, buffet, alacarte
+    let currentTable = 'T05';
+    let selectedMenuType = 'all';
     let selectedCategory = 'all';
     let searchQuery = '';
-    let cart = []; // [{item, qty, spice, note}]
+    let cart = [];
     let orders = JSON.parse(localStorage.getItem('buffet_orders')) || [
       {
         id: 'ORD-101',
@@ -1235,7 +1231,6 @@
       }
     ];
 
-    // 20 Tables State
     let tablesData = JSON.parse(localStorage.getItem('buffet_tables')) || {};
     if (Object.keys(tablesData).length === 0) {
       for (let i = 1; i <= 20; i++) {
@@ -1252,7 +1247,6 @@
       }
     }
 
-    // BroadcastChannel for cross-tab sync without needing server
     const syncChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('buffet_channel') : null;
     if (syncChannel) {
       syncChannel.onmessage = (e) => {
@@ -1278,7 +1272,6 @@
       };
     }
 
-    // Storage event fallback for older tabs
     window.addEventListener('storage', (e) => {
       if (e.key === 'buffet_orders') {
         orders = JSON.parse(e.newValue || '[]');
@@ -1315,8 +1308,6 @@
         const ctx = new AudioCtx();
         const now = ctx.currentTime;
 
-        // Friendly restaurant 2-tone doorbell chime
-        // First Bell Note: 587.33 Hz (D5)
         const osc1 = ctx.createOscillator();
         const gain1 = ctx.createGain();
         osc1.type = 'sine';
@@ -1328,7 +1319,6 @@
         osc1.start(now);
         osc1.stop(now + 0.5);
 
-        // Second Bell Note: 880 Hz (A5)
         const osc2 = ctx.createOscillator();
         const gain2 = ctx.createGain();
         osc2.type = 'sine';
@@ -1362,30 +1352,26 @@
     // 5. VIEW SWITCHING (โหมดนำเสนอ)
     // ==========================================
     function switchView(viewName) {
-      // Hide all panels
       document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
       document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('block'));
 
-      // Show selected panel
       const target = document.getElementById(`view-${viewName}`);
       if (target) {
         target.classList.remove('hidden');
         target.classList.add('block');
       }
 
-      // Update Navigation button styles
       ['customer', 'kitchen', 'tables', 'qr', 'admin'].forEach(tab => {
         const btn = document.getElementById(`nav-btn-${tab}`);
         if (btn) {
           if (tab === viewName) {
-            btn.className = "nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-white bg-amber-500 shadow-md font-semibold";
+            btn.className = "nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-900 bg-white shadow-sm font-semibold";
           } else {
-            btn.className = "nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-300 hover:text-white hover:bg-slate-700/50";
+            btn.className = "nav-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition text-slate-600 hover:text-slate-900 hover:bg-white/60";
           }
         }
       });
 
-      // Special actions on tab open
       if (viewName === 'kitchen') renderKitchenOrders();
       if (viewName === 'tables') renderTablesGrid();
       if (viewName === 'qr') renderQrCodes();
@@ -1414,8 +1400,8 @@
         return `
           <button onclick="filterCategory('${cat.id}')" class="whitespace-nowrap px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 transition ${
             isSelected 
-              ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20' 
-              : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800'
+              ? 'bg-slate-900 text-white font-bold shadow-sm' 
+              : 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200'
           }">
             <span>${cat.icon}</span> <span>${name}</span>
           </button>
@@ -1429,9 +1415,9 @@
         const btn = document.getElementById(`btn-type-${t}`);
         if (btn) {
           if (t === type) {
-            btn.className = "menu-type-btn flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-semibold transition bg-amber-500 text-slate-950 shadow";
+            btn.className = "menu-type-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-slate-900 shadow-sm";
           } else {
-            btn.className = "menu-type-btn flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white";
+            btn.className = "menu-type-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900";
           }
         }
       });
@@ -1489,55 +1475,54 @@
         const priceLabel = isBuffet ? '0 ฿' : `฿ ${item.price}`;
         const badgeLabel = isBuffet ? I18N[currentLang].included_in_buffet : I18N[currentLang].alacarte_tag;
 
-        // Current item count in cart
         const cartItem = cart.find(c => c.id === item.id);
         const cartQty = cartItem ? cartItem.qty : 0;
 
         return `
-          <div class="food-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between shadow-lg relative ${!item.available ? 'opacity-50 grayscale' : ''}">
+          <div class="food-card bg-white border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition duration-200 relative ${!item.available ? 'opacity-50 grayscale' : ''}">
             <!-- Badge: Buffet vs À la Carte -->
             <div class="absolute top-2.5 left-2.5 z-10">
-              <span class="text-[10px] px-2 py-0.5 rounded-md font-bold uppercase shadow-md ${
+              <span class="text-[10px] px-2 py-0.5 rounded-md font-bold uppercase shadow-sm ${
                 isBuffet 
-                  ? 'bg-emerald-500 text-slate-950 border border-emerald-400' 
-                  : 'bg-amber-500 text-slate-950 border border-amber-400'
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                  : 'bg-amber-50 text-amber-800 border border-amber-200'
               }">
                 ${badgeLabel}
               </span>
             </div>
 
             <!-- Image with quick detail click -->
-            <div class="relative h-36 sm:h-44 bg-slate-950 overflow-hidden cursor-pointer group" onclick="openFoodDetailModal('${item.id}')">
+            <div class="relative h-36 sm:h-44 bg-slate-100 overflow-hidden cursor-pointer group" onclick="openFoodDetailModal('${item.id}')">
               <img src="${item.image}" alt="${name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-              ${!item.available ? '<div class="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-xs font-bold">สินค้าหมด (Sold Out)</div>' : ''}
-              ${item.popular ? '<span class="absolute top-2.5 right-2.5 bg-rose-600 text-white text-[10px] px-1.5 py-0.5 rounded font-bold shadow">HOT ⭐</span>' : ''}
+              ${!item.available ? '<div class="absolute inset-0 bg-white/80 flex items-center justify-center text-slate-800 text-xs font-bold">สินค้าหมด (Sold Out)</div>' : ''}
+              ${item.popular ? '<span class="absolute top-2.5 right-2.5 bg-rose-50 text-rose-700 border border-rose-200 text-[10px] px-1.5 py-0.5 rounded font-bold shadow-xs">HOT ⭐</span>' : ''}
             </div>
 
             <!-- Info & Actions -->
             <div class="p-3 sm:p-3.5 flex-1 flex flex-col justify-between space-y-2">
               <div>
-                <h4 class="font-bold text-white text-xs sm:text-sm line-clamp-1 cursor-pointer hover:text-amber-400" onclick="openFoodDetailModal('${item.id}')">${name}</h4>
-                <p class="text-[11px] text-slate-400 line-clamp-1 mt-0.5">${desc || ''}</p>
+                <h4 class="font-bold text-slate-900 text-xs sm:text-sm line-clamp-1 cursor-pointer hover:text-amber-600" onclick="openFoodDetailModal('${item.id}')">${name}</h4>
+                <p class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">${desc || ''}</p>
               </div>
 
-              <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100">
                 <div>
-                  <span class="text-xs sm:text-sm font-bold ${isBuffet ? 'text-emerald-400' : 'text-amber-400'}">${priceLabel}</span>
-                  ${isBuffet ? '<span class="block text-[9px] text-slate-500">รวมในบุฟเฟต์</span>' : ''}
+                  <span class="text-xs sm:text-sm font-extrabold ${isBuffet ? 'text-emerald-700' : 'text-amber-700'}">${priceLabel}</span>
+                  ${isBuffet ? '<span class="block text-[9px] text-slate-400">รวมในบุฟเฟต์</span>' : ''}
                 </div>
 
                 ${item.available ? `
                   <div class="flex items-center gap-1">
                     ${cartQty > 0 ? `
-                      <button onclick="updateCartItemQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-center text-xs">-</button>
-                      <span class="w-5 text-center text-xs font-bold text-amber-400">${cartQty}</span>
+                      <button onclick="updateCartItemQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold flex items-center justify-center text-xs">-</button>
+                      <span class="w-5 text-center text-xs font-bold text-slate-900">${cartQty}</span>
                     ` : ''}
-                    <button onclick="quickAddToCart('${item.id}')" class="w-7 h-7 sm:w-auto sm:px-2.5 sm:py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-xs transition active:scale-95 shadow">
+                    <button onclick="quickAddToCart('${item.id}')" class="w-7 h-7 sm:w-auto sm:px-2.5 sm:py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-bold flex items-center justify-center text-xs transition active:scale-95 shadow-sm">
                       <span>+</span><span class="hidden sm:inline sm:ml-1">${I18N[currentLang].add_to_cart_btn}</span>
                     </button>
                   </div>
                 ` : `
-                  <span class="text-[10px] text-slate-500">งดจำหน่าย</span>
+                  <span class="text-[10px] text-slate-400 font-medium">งดจำหน่าย</span>
                 `}
               </div>
             </div>
@@ -1571,10 +1556,10 @@
 
       const badge = document.getElementById('detail-food-badge');
       if (item.type === 'buffet') {
-        badge.className = "absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950";
+        badge.className = "absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm";
         badge.textContent = I18N[currentLang].included_in_buffet;
       } else {
-        badge.className = "absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500 text-slate-950";
+        badge.className = "absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200 shadow-sm";
         badge.textContent = I18N[currentLang].alacarte_tag;
       }
 
@@ -1592,9 +1577,9 @@
         const btn = document.getElementById(`spice-btn-${l}`);
         if (btn) {
           if (l === level) {
-            btn.className = "spice-opt-btn py-1.5 rounded-lg border border-amber-500 bg-amber-500/20 text-amber-400 font-bold";
+            btn.className = "spice-opt-btn py-1.5 rounded-lg border border-amber-500 bg-amber-50 text-amber-800 font-bold shadow-xs";
           } else {
-            btn.className = "spice-opt-btn py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 font-medium";
+            btn.className = "spice-opt-btn py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 font-medium";
           }
         }
       });
@@ -1682,10 +1667,10 @@
 
       if (cart.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-12 text-slate-500">
+          <div class="text-center py-12 text-slate-400">
             <div class="text-4xl mb-2">🛒</div>
-            <p class="text-xs">ยังไม่มีรายการในตะกร้า</p>
-            <p class="text-[11px] text-slate-600 mt-1">เลือกเมนูบุฟเฟต์หรืออะลาคาร์ทเพื่อเริ่มสั่งอาหาร</p>
+            <p class="text-xs font-medium">ยังไม่มีรายการในตะกร้า</p>
+            <p class="text-[11px] text-slate-400 mt-1">เลือกเมนูบุฟเฟต์หรืออะลาคาร์ทเพื่อเริ่มสั่งอาหาร</p>
           </div>
         `;
         if (buffetTotalLabel) buffetTotalLabel.textContent = '0 ฿';
@@ -1694,7 +1679,6 @@
         return;
       }
 
-      // Group into Buffet & À la carte
       const buffetItems = cart.filter(c => c.type === 'buffet');
       const alacarteItems = cart.filter(c => c.type === 'alacarte');
       const alacarteSum = alacarteItems.reduce((acc, c) => acc + (c.price * c.qty), 0);
@@ -1704,7 +1688,7 @@
       if (buffetItems.length > 0) {
         html += `
           <div class="space-y-2">
-            <div class="flex items-center justify-between text-xs font-bold text-emerald-400 border-b border-slate-800 pb-1">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-700 border-b border-slate-200 pb-1">
               <span>🥩 รายการบุฟเฟต์ (0 ฿ รวมในคอร์ส)</span>
               <span>${buffetItems.reduce((a, b) => a + b.qty, 0)} จาน</span>
             </div>
@@ -1716,7 +1700,7 @@
       if (alacarteItems.length > 0) {
         html += `
           <div class="space-y-2 pt-2">
-            <div class="flex items-center justify-between text-xs font-bold text-amber-400 border-b border-slate-800 pb-1">
+            <div class="flex items-center justify-between text-xs font-bold text-amber-700 border-b border-slate-200 pb-1">
               <span>🍣 รายการอะลาคาร์ทพิเศษ (คิดราคาแยก)</span>
               <span>รวม ฿ ${alacarteSum}</span>
             </div>
@@ -1738,13 +1722,13 @@
       const spiceBadge = item.spice === 0 ? 'ไม่เผ็ด' : (item.spice === 2 ? '🌶️ เผ็ดมาก' : '🌶️ เผ็ดกลาง');
 
       return `
-        <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between gap-3">
+        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between gap-3 text-slate-800">
           <div class="flex items-center gap-2.5 flex-1 min-w-0">
-            <img src="${item.image}" alt="" class="w-10 h-10 rounded-lg object-cover bg-slate-900 flex-shrink-0">
+            <img src="${item.image}" alt="" class="w-10 h-10 rounded-lg object-cover bg-slate-200 flex-shrink-0">
             <div class="min-w-0">
-              <h5 class="text-xs font-bold text-white truncate">${name}</h5>
-              <div class="flex items-center gap-1.5 text-[10px] text-slate-400 mt-0.5">
-                <span class="text-amber-400 font-semibold">${isBuffet ? '0 ฿' : '฿ ' + item.price}</span>
+              <h5 class="text-xs font-bold text-slate-900 truncate">${name}</h5>
+              <div class="flex items-center gap-1.5 text-[10px] text-slate-500 mt-0.5">
+                <span class="text-amber-700 font-bold">${isBuffet ? '0 ฿' : '฿ ' + item.price}</span>
                 <span>•</span>
                 <span>${spiceBadge}</span>
               </div>
@@ -1752,15 +1736,14 @@
           </div>
 
           <div class="flex items-center gap-1.5">
-            <button onclick="updateCartItemQty('${item.id}', -1)" class="w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-center text-xs">-</button>
-            <span class="w-4 text-center text-xs font-bold text-white">${item.qty}</span>
-            <button onclick="updateCartItemQty('${item.id}', 1)" class="w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-center text-xs">+</button>
+            <button onclick="updateCartItemQty('${item.id}', -1)" class="w-6 h-6 rounded bg-white hover:bg-slate-200 border border-slate-200 text-slate-800 font-bold flex items-center justify-center text-xs">-</button>
+            <span class="w-4 text-center text-xs font-bold text-slate-900">${item.qty}</span>
+            <button onclick="updateCartItemQty('${item.id}', 1)" class="w-6 h-6 rounded bg-white hover:bg-slate-200 border border-slate-200 text-slate-800 font-bold flex items-center justify-center text-xs">+</button>
           </div>
         </div>
       `;
     }
 
-    // Submit Order to Kitchen & Broadcast
     async function submitTableOrder() {
       if (cart.length === 0) {
         showToast('กรุณาเลือกอาหารลงตะกร้าก่อนสั่ง', 'error');
@@ -1779,17 +1762,15 @@
         tableId: currentTable,
         tableNumber: tableNumber,
         createdAt: Date.now(),
-        status: 'pending', // pending, cooking, served
+        status: 'pending',
         items: [...cart],
         totalAlacarte: alacarteSum,
         totalItems: totalItems,
         note: note
       };
 
-      // Add to local state
       orders.unshift(newOrder);
 
-      // Update table status
       if (tablesData[currentTable]) {
         tablesData[currentTable].status = 'new_order';
         if (!tablesData[currentTable].startTime) tablesData[currentTable].startTime = Date.now();
@@ -1797,15 +1778,12 @@
 
       saveState();
 
-      // Broadcast across tabs
       if (syncChannel) {
         syncChannel.postMessage({ type: 'NEW_ORDER', order: newOrder });
       }
 
-      // Play Sound
       playNotificationSound();
 
-      // Clear Cart
       cart = [];
       if (noteInput) noteInput.value = '';
       closeCartDrawer();
@@ -1814,16 +1792,13 @@
       renderKitchenOrders();
       renderTablesGrid();
 
-      // Try sending to server if running
       try {
         await fetch('/api/orders', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newOrder)
         });
-      } catch (e) {
-        // purely client/offline mode fallback
-      }
+      } catch (e) {}
 
       showToast(`🎉 ${I18N[currentLang].order_sent_success} (โต๊ะ ${tableNumber})`, 'success');
     }
@@ -1839,9 +1814,9 @@
         const btn = document.getElementById(`kds-tab-${s}`);
         if (btn) {
           if (s === status) {
-            btn.className = "px-2.5 py-1 rounded-lg font-medium text-slate-950 bg-amber-500 font-bold";
+            btn.className = "px-2.5 py-1 rounded-lg font-medium text-slate-900 bg-white font-bold shadow-sm";
           } else {
-            btn.className = "px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white";
+            btn.className = "px-2.5 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900";
           }
         }
       });
@@ -1877,67 +1852,63 @@
         let actionBtn = '';
 
         if (order.status === 'pending') {
-          statusBadge = '<span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] px-2 py-0.5 rounded-full font-bold animate-pulse">🟡 รอดำเนินการ (New)</span>';
+          statusBadge = '<span class="bg-amber-50 text-amber-800 border border-amber-300 text-[10px] px-2 py-0.5 rounded-full font-bold animate-pulse">🟡 รอดำเนินการ (New)</span>';
           actionBtn = `
-            <button onclick="updateOrderStatus('${order.id}', 'cooking')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow transition">
+            <button onclick="updateOrderStatus('${order.id}', 'cooking')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
               🍳 รับออเดอร์ / เริ่มปรุง
             </button>
           `;
         } else if (order.status === 'cooking') {
-          statusBadge = '<span class="bg-blue-500/20 text-blue-400 border border-blue-500/40 text-[10px] px-2 py-0.5 rounded-full font-bold">🔵 กำลังปรุง (Cooking)</span>';
+          statusBadge = '<span class="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] px-2 py-0.5 rounded-full font-bold">🔵 กำลังปรุง (Cooking)</span>';
           actionBtn = `
-            <button onclick="updateOrderStatus('${order.id}', 'served')" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow transition">
+            <button onclick="updateOrderStatus('${order.id}', 'served')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
               ✅ ปรุงเสร็จ / พร้อมเสิร์ฟ
             </button>
           `;
         } else {
-          statusBadge = '<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[10px] px-2 py-0.5 rounded-full font-bold">🟢 เสิร์ฟแล้ว (Completed)</span>';
+          statusBadge = '<span class="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] px-2 py-0.5 rounded-full font-bold">🟢 เสิร์ฟแล้ว (Completed)</span>';
           actionBtn = `
-            <span class="text-xs text-slate-500 py-1 text-center w-full">เสิร์ฟถึงโต๊ะเรียบร้อยแล้ว</span>
+            <span class="text-xs text-slate-400 py-1 text-center w-full font-medium">เสิร์ฟถึงโต๊ะเรียบร้อยแล้ว</span>
           `;
         }
 
         return `
-          <div class="bg-slate-900 border ${order.status === 'pending' ? 'border-amber-500/60 shadow-amber-500/10' : 'border-slate-800'} rounded-2xl p-4 flex flex-col justify-between shadow-xl space-y-3">
-            <!-- Order Ticket Header -->
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="bg-white border ${order.status === 'pending' ? 'border-amber-400 shadow-md ring-2 ring-amber-100' : 'border-slate-200'} rounded-2xl p-4 flex flex-col justify-between shadow-sm space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
               <div class="flex items-center gap-2">
-                <span class="text-xl font-bold bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-lg">โต๊ะ ${order.tableNumber}</span>
+                <span class="text-sm font-extrabold bg-slate-900 text-white px-2.5 py-0.5 rounded-lg">โต๊ะ ${order.tableNumber}</span>
                 <span class="text-xs text-slate-400 font-mono">${order.id}</span>
               </div>
               <div class="text-right">
                 ${statusBadge}
-                <div class="text-[10px] text-slate-500 mt-1">🕒 ${timeLabel}</div>
+                <div class="text-[10px] text-slate-400 mt-1">🕒 ${timeLabel}</div>
               </div>
             </div>
 
-            <!-- Items List -->
             <div class="space-y-1.5 text-xs">
               ${order.items.map(it => {
                 const name = currentLang === 'en' ? (it.nameEn || it.nameTh) : (currentLang === 'zh' ? (it.nameZh || it.nameTh) : it.nameTh);
                 const isAlacarte = it.type === 'alacarte';
                 return `
-                  <div class="flex items-center justify-between bg-slate-950/70 px-2.5 py-1.5 rounded-lg border border-slate-800/80">
+                  <div class="flex items-center justify-between bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800">
                     <div class="flex items-center gap-2">
-                      <span class="w-6 h-6 rounded bg-slate-800 text-amber-400 font-bold flex items-center justify-center text-xs">${it.qty}x</span>
-                      <span class="text-white font-medium">${name}</span>
-                      ${isAlacarte ? '<span class="text-[9px] bg-amber-500/20 text-amber-400 px-1.5 py-0.2 rounded font-bold">อะลาคาร์ท</span>' : ''}
+                      <span class="w-6 h-6 rounded bg-white border border-slate-200 text-slate-900 font-bold flex items-center justify-center text-xs shadow-xs">${it.qty}x</span>
+                      <span class="text-slate-900 font-medium">${name}</span>
+                      ${isAlacarte ? '<span class="text-[9px] bg-amber-50 text-amber-800 border border-amber-200 px-1.5 py-0.2 rounded font-bold">อะลาคาร์ท</span>' : ''}
                     </div>
-                    <span class="text-[10px] text-slate-400">${isAlacarte ? '฿ ' + (it.price * it.qty) : 'บุฟเฟต์'}</span>
+                    <span class="text-[10px] text-slate-500 font-semibold">${isAlacarte ? '฿ ' + (it.price * it.qty) : 'บุฟเฟต์'}</span>
                   </div>
                 `;
               }).join('')}
             </div>
 
-            <!-- Order Special Note -->
             ${order.note ? `
-              <div class="bg-rose-950/40 border border-rose-500/30 text-rose-300 rounded-lg p-2 text-xs flex items-center gap-1.5">
+              <div class="bg-rose-50 border border-rose-200 text-rose-800 rounded-lg p-2 text-xs flex items-center gap-1.5">
                 <span>📝</span> <span><strong>หมายเหตุ:</strong> ${order.note}</span>
               </div>
             ` : ''}
 
-            <!-- Bottom Actions -->
-            <div class="pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
               ${actionBtn}
             </div>
           </div>
@@ -1989,30 +1960,29 @@
         const tid = `T${i.toString().padStart(2, '0')}`;
         const table = tablesData[tid] || { id: tid, number: i, status: 'available' };
         
-        // Find active orders for this table
         const tableOrders = orders.filter(o => o.tableId === tid);
         const hasPending = tableOrders.some(o => o.status === 'pending');
         const hasCooking = tableOrders.some(o => o.status === 'cooking');
         
-        let statusStyle = 'border-slate-800 bg-slate-900/90';
-        let statusBadge = '<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[10px] px-2 py-0.5 rounded-full font-bold">🟢 ว่าง</span>';
+        let statusStyle = 'border-slate-200 bg-white hover:border-slate-300';
+        let statusBadge = '<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] px-2 py-0.5 rounded-full font-bold">🟢 ว่าง</span>';
         let statusText = 'โต๊ะว่าง พร้อมต้อนรับ';
 
         if (hasPending) {
-          statusStyle = 'border-amber-500/80 bg-slate-900 pulse-ring';
-          statusBadge = '<span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-bold">🟡 ออเดอร์ใหม่!</span>';
+          statusStyle = 'border-amber-400 bg-amber-50/40 pulse-ring';
+          statusBadge = '<span class="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">🟡 ออเดอร์ใหม่!</span>';
           statusText = `${tableOrders.length} ออเดอร์`;
         } else if (hasCooking || table.status === 'occupied') {
-          statusStyle = 'border-blue-500/60 bg-slate-900';
-          statusBadge = '<span class="bg-blue-500/20 text-blue-400 border border-blue-500/40 text-[10px] px-2 py-0.5 rounded-full font-bold">🔵 กำลังทาน</span>';
+          statusStyle = 'border-blue-200 bg-blue-50/30';
+          statusBadge = '<span class="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] px-2 py-0.5 rounded-full font-bold">🔵 กำลังทาน</span>';
           statusText = `${tableOrders.length} ออเดอร์ • ${table.guests || 2} ท่าน`;
         }
 
         html += `
-          <div onclick="openTableDetailModal('${tid}')" class="food-card ${statusStyle} border rounded-2xl p-3.5 flex flex-col justify-between cursor-pointer shadow-lg hover:border-amber-500 transition">
+          <div onclick="openTableDetailModal('${tid}')" class="food-card ${statusStyle} border rounded-2xl p-3.5 flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between">
-              <span class="text-base font-bold text-white flex items-center gap-1.5">
-                <span class="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-amber-400 border border-slate-700">
+              <span class="text-base font-bold text-slate-900 flex items-center gap-1.5">
+                <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-800 border border-slate-200">
                   ${i.toString().padStart(2, '0')}
                 </span>
                 <span>โต๊ะ ${i}</span>
@@ -2020,18 +1990,18 @@
               ${statusBadge}
             </div>
 
-            <div class="py-3 text-xs text-slate-400">
-              <p class="font-medium text-slate-300">${statusText}</p>
+            <div class="py-3 text-xs text-slate-500">
+              <p class="font-semibold text-slate-800">${statusText}</p>
               ${table.startTime ? `
-                <p class="text-[10px] text-amber-400 mt-0.5">⏳ ทานแล้ว ${Math.floor((Date.now() - table.startTime) / 60000)} นาที</p>
+                <p class="text-[10px] text-amber-700 font-medium mt-0.5">⏳ ทานแล้ว ${Math.floor((Date.now() - table.startTime) / 60000)} นาที</p>
               ` : `
-                <p class="text-[10px] text-slate-500 mt-0.5">สแกน QR เพื่อเปิดโต๊ะ</p>
+                <p class="text-[10px] text-slate-400 mt-0.5">สแกน QR เพื่อเปิดโต๊ะ</p>
               `}
             </div>
 
-            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs">
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
               <span class="text-slate-400 text-[11px]">คลิกดูบิล/จัดการ</span>
-              <span class="text-amber-400 font-bold">→</span>
+              <span class="text-slate-800 font-bold">→</span>
             </div>
           </div>
         `;
@@ -2061,12 +2031,11 @@
       document.getElementById('table-modal-title').textContent = `โต๊ะ ${table.number} - ข้อมูลออเดอร์ & เช็คบิล`;
       const badge = document.getElementById('table-modal-status-badge');
       badge.textContent = table.status === 'occupied' || tableOrders.length > 0 ? 'กำลังใช้งาน (Occupied)' : 'ว่าง (Available)';
-      badge.className = `text-[10px] px-2 py-0.5 rounded-full font-bold ${tableOrders.length > 0 ? 'bg-blue-500 text-white' : 'bg-emerald-500 text-slate-950'}`;
+      badge.className = `text-[10px] px-2 py-0.5 rounded-full font-bold ${tableOrders.length > 0 ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}`;
 
       const content = document.getElementById('table-modal-content');
       const actions = document.getElementById('table-modal-actions');
 
-      // Calculate Total
       const buffetPricePerHead = 599;
       const guests = table.guests || (tableOrders.length > 0 ? 2 : 0);
       const buffetTotal = guests * buffetPricePerHead;
@@ -2076,74 +2045,71 @@
       let ordersHtml = '';
       if (tableOrders.length === 0) {
         ordersHtml = `
-          <div class="text-center py-6 text-slate-500">
+          <div class="text-center py-6 text-slate-400">
             <p>ยังไม่มีรายการอาหารสั่งในรอบนี้</p>
           </div>
         `;
       } else {
         ordersHtml = tableOrders.map((ord, idx) => `
-          <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
-            <div class="flex justify-between font-bold text-amber-400">
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
+            <div class="flex justify-between font-bold text-slate-900">
               <span>รอบที่ ${tableOrders.length - idx} (${ord.id})</span>
-              <span class="text-[10px] text-slate-400">${new Date(ord.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              <span class="text-[10px] text-slate-400 font-normal">${new Date(ord.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
             <div class="space-y-1">
               ${ord.items.map(it => `
-                <div class="flex justify-between text-slate-300">
+                <div class="flex justify-between text-slate-700">
                   <span>${it.qty}x ${it.nameTh}</span>
-                  <span class="text-slate-400">${it.type === 'alacarte' ? '฿ ' + (it.price * it.qty) : '0 ฿'}</span>
+                  <span class="text-slate-500 font-semibold">${it.type === 'alacarte' ? '฿ ' + (it.price * it.qty) : '0 ฿'}</span>
                 </div>
               `).join('')}
             </div>
-            ${ord.note ? `<p class="text-[10px] text-rose-400 pt-1 border-t border-slate-800">โน้ต: ${ord.note}</p>` : ''}
+            ${ord.note ? `<p class="text-[10px] text-rose-600 pt-1 border-t border-slate-200 font-medium">โน้ต: ${ord.note}</p>` : ''}
           </div>
         `).join('');
       }
 
       content.innerHTML = `
-        <!-- Table Status Summary -->
-        <div class="grid grid-cols-2 gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
+        <div class="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
           <div>
             <span class="text-slate-500">แพ็กเกจบุฟเฟต์:</span>
-            <p class="font-bold text-white">${table.buffetType || 'Premium Buffet 599฿'}</p>
+            <p class="font-bold text-slate-900">${table.buffetType || 'Premium Buffet 599฿'}</p>
           </div>
           <div>
             <span class="text-slate-500">จำนวนลูกค้า:</span>
-            <p class="font-bold text-white">${guests} ท่าน</p>
+            <p class="font-bold text-slate-900">${guests} ท่าน</p>
           </div>
         </div>
 
-        <!-- Orders History -->
         <div>
-          <h4 class="font-bold text-slate-200 mb-2">ประวัติการสั่งอาหาร (${tableOrders.length} รอบ):</h4>
+          <h4 class="font-bold text-slate-800 mb-2">ประวัติการสั่งอาหาร (${tableOrders.length} รอบ):</h4>
           <div class="space-y-2 max-h-48 overflow-y-auto">
             ${ordersHtml}
           </div>
         </div>
 
-        <!-- Bill Calculation Summary -->
-        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
-          <div class="flex justify-between text-slate-400">
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
+          <div class="flex justify-between text-slate-600">
             <span>บุฟเฟต์ (${guests} ท่าน x 599฿):</span>
-            <span class="text-white font-semibold">฿ ${buffetTotal}</span>
+            <span class="text-slate-900 font-semibold">฿ ${buffetTotal}</span>
           </div>
-          <div class="flex justify-between text-slate-400">
+          <div class="flex justify-between text-slate-600">
             <span>อะลาคาร์ทสั่งแยก รวม:</span>
-            <span class="text-amber-400 font-semibold">฿ ${alacarteTotal}</span>
+            <span class="text-amber-700 font-bold">฿ ${alacarteTotal}</span>
           </div>
-          <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-slate-800">
+          <div class="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-200">
             <span>ยอดรวมสุทธิ (Net Total):</span>
-            <span class="text-amber-400 text-base">฿ ${grandTotal}</span>
+            <span class="text-amber-700 text-base font-extrabold">฿ ${grandTotal}</span>
           </div>
         </div>
       `;
 
       actions.innerHTML = `
-        <button onclick="orderForTable('${tid}')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs flex items-center gap-1 transition">
+        <button onclick="orderForTable('${tid}')" class="bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1 shadow-xs transition">
           📱 สั่งอาหารแทนลูกค้า
         </button>
         <div class="flex items-center gap-2">
-          <button onclick="checkoutTable('${tid}')" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition">
+          <button onclick="checkoutTable('${tid}')" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm transition">
             💳 เช็คบิล & เคลียร์โต๊ะ
           </button>
         </div>
@@ -2166,7 +2132,6 @@
     async function checkoutTable(tableId) {
       if (!confirm(`ยืนยันการเช็คบิลและเคลียร์โต๊ะ ${tableId} หรือไม่?`)) return;
 
-      // Remove active orders for this table
       orders = orders.filter(o => o.tableId !== tableId);
       if (tablesData[tableId]) {
         tablesData[tableId].status = 'available';
@@ -2213,7 +2178,6 @@
         const tableNum = i.toString().padStart(2, '0');
         const targetUrl = `${baseDemoUrl}?table=${i}`;
 
-        // Generate pure offline SVG QR code
         let qrSvg = '';
         if (window.QRCode && window.QRCode.generateSvg) {
           qrSvg = window.QRCode.generateSvg(targetUrl, 4, 1);
@@ -2222,28 +2186,24 @@
         }
 
         html += `
-          <div class="qr-print-card bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center shadow-xl space-y-3 relative group">
-            <!-- Table Standee Header -->
-            <div class="w-full border-b border-slate-800 pb-2">
-              <span class="text-xs text-amber-400 font-bold tracking-wider uppercase">SHABU & GRILL PALACE</span>
-              <h3 class="text-lg font-extrabold text-white">โต๊ะ ${tableNum} (TABLE ${i})</h3>
+          <div class="qr-print-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col items-center text-center shadow-sm hover:shadow-md transition space-y-3 relative group">
+            <div class="w-full border-b border-slate-100 pb-2">
+              <span class="text-xs text-amber-600 font-bold tracking-wider uppercase">SHABU & GRILL PALACE</span>
+              <h3 class="text-lg font-extrabold text-slate-900">โต๊ะ ${tableNum} (TABLE ${i})</h3>
             </div>
 
-            <!-- Crisp QR Code SVG -->
-            <div class="w-36 h-36 bg-white p-2 rounded-xl shadow-inner flex items-center justify-center">
+            <div class="w-36 h-36 bg-slate-50 p-2 rounded-xl border border-slate-200 shadow-inner flex items-center justify-center">
               ${qrSvg}
             </div>
 
-            <!-- Multi-Language Instructions -->
-            <div class="text-[11px] space-y-0.5 text-slate-300">
-              <p class="font-bold text-white">📱 สแกนเพื่อสั่งอาหาร</p>
-              <p class="text-slate-400">Scan QR Code to Order Food</p>
-              <p class="text-slate-500">微信/支付宝/相机扫码点餐</p>
+            <div class="text-[11px] space-y-0.5 text-slate-600">
+              <p class="font-bold text-slate-900">📱 สแกนเพื่อสั่งอาหาร</p>
+              <p class="text-slate-500">Scan QR Code to Order Food</p>
+              <p class="text-slate-400">微信/支付宝/相机扫码点餐</p>
             </div>
 
-            <!-- Direct Demo Action Buttons (Hidden when printing) -->
-            <div class="no-print w-full pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
-              <button onclick="testOpenQrTable('${i}')" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-1.5 rounded-lg text-xs transition shadow">
+            <div class="no-print w-full pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+              <button onclick="testOpenQrTable('${i}')" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-1.5 rounded-lg text-xs transition shadow-sm">
                 🔗 เปิดสั่งโต๊ะนี้
               </button>
             </div>
@@ -2295,33 +2255,33 @@
       tbody.innerHTML = filtered.map(item => {
         const isBuffet = item.type === 'buffet';
         return `
-          <tr class="hover:bg-slate-800/40 transition">
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100 text-slate-700">
             <td class="px-4 py-2.5">
-              <img src="${item.image}" alt="" class="w-10 h-10 rounded-lg object-cover bg-slate-950">
+              <img src="${item.image}" alt="" class="w-10 h-10 rounded-lg object-cover bg-slate-100 border border-slate-200">
             </td>
             <td class="px-4 py-2.5">
-              <div class="font-bold text-white text-xs">${item.nameTh}</div>
-              <div class="text-[10px] text-slate-400">${item.nameEn} • ${item.nameZh}</div>
+              <div class="font-bold text-slate-900 text-xs">${item.nameTh}</div>
+              <div class="text-[10px] text-slate-500">${item.nameEn} • ${item.nameZh}</div>
             </td>
             <td class="px-4 py-2.5">
-              <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[10px]">${item.category}</span>
+              <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] border border-slate-200 font-medium">${item.category}</span>
             </td>
             <td class="px-4 py-2.5">
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isBuffet ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isBuffet ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200'}">
                 ${isBuffet ? 'บุฟเฟต์ (0฿)' : 'อะลาคาร์ท'}
               </span>
             </td>
-            <td class="px-4 py-2.5 font-bold ${isBuffet ? 'text-emerald-400' : 'text-amber-400'}">
+            <td class="px-4 py-2.5 font-bold ${isBuffet ? 'text-emerald-700' : 'text-amber-700'}">
               ${isBuffet ? '0 ฿' : '฿ ' + item.price}
             </td>
             <td class="px-4 py-2.5">
-              <button onclick="toggleItemStock('${item.id}')" class="px-2 py-0.5 rounded text-[10px] font-bold ${item.available ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">
+              <button onclick="toggleItemStock('${item.id}')" class="px-2 py-0.5 rounded text-[10px] font-bold ${item.available ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}">
                 ${item.available ? 'พร้อมขาย' : 'สินค้าหมด'}
               </button>
             </td>
             <td class="px-4 py-2.5 text-right space-x-1">
-              <button onclick="openEditMenuModal('${item.id}')" class="bg-slate-800 hover:bg-slate-700 text-amber-400 px-2 py-1 rounded text-xs">✏️ แก้ไข</button>
-              <button onclick="deleteMenuItem('${item.id}')" class="bg-slate-800 hover:bg-rose-900 text-rose-400 px-2 py-1 rounded text-xs">🗑️ ลบ</button>
+              <button onclick="openEditMenuModal('${item.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 px-2.5 py-1 rounded text-xs font-semibold">✏️ แก้ไข</button>
+              <button onclick="deleteMenuItem('${item.id}')" class="bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-2.5 py-1 rounded text-xs font-semibold">🗑️ ลบ</button>
             </td>
           </tr>
         `;
@@ -2422,14 +2382,12 @@
       }
 
       if (id) {
-        // Edit
         const index = menuItems.findIndex(m => m.id === id);
         if (index !== -1) {
           menuItems[index] = { ...menuItems[index], nameTh, nameEn, nameZh, category, type, price, image, available };
           showToast(`แก้ไขเมนู "${nameTh}" เรียบร้อย`, 'success');
         }
       } else {
-        // Add
         const newId = 'm' + (Date.now() % 10000);
         menuItems.unshift({
           id: newId,
@@ -2486,22 +2444,20 @@
 
       const toast = document.createElement('div');
       const colors = {
-        success: 'bg-emerald-600 text-white border-emerald-400',
-        error: 'bg-rose-600 text-white border-rose-400',
-        info: 'bg-slate-800 text-white border-amber-500'
+        success: 'bg-emerald-600 text-white border-emerald-500',
+        error: 'bg-rose-600 text-white border-rose-500',
+        info: 'bg-slate-900 text-white border-slate-700'
       };
 
-      toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl border shadow-2xl text-xs font-semibold flex items-center gap-2 transform transition-all duration-300 translate-y-4 opacity-0 ${colors[type] || colors.info}`;
+      toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl border shadow-xl text-xs font-semibold flex items-center gap-2 transform transition-all duration-300 translate-y-4 opacity-0 ${colors[type] || colors.info}`;
       toast.innerHTML = `<span>${type === 'success' ? '✅' : (type === 'error' ? '⚠️' : '🔔')}</span> <span>${message}</span>`;
 
       container.appendChild(toast);
 
-      // Animate in
       requestAnimationFrame(() => {
         toast.classList.remove('translate-y-4', 'opacity-0');
       });
 
-      // Auto dismiss
       setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-y-4');
         setTimeout(() => toast.remove(), 300);
@@ -2514,7 +2470,7 @@
       isMobileSimulator = !isMobileSimulator;
       const wrapper = document.getElementById('main-content-wrapper');
       if (isMobileSimulator) {
-        wrapper.className = "flex-1 w-full max-w-sm mx-auto px-4 py-4 border-4 border-slate-800 rounded-3xl shadow-2xl bg-slate-950 my-4";
+        wrapper.className = "flex-1 w-full max-w-sm mx-auto px-4 py-4 border-4 border-slate-300 rounded-3xl shadow-2xl bg-white my-4";
         showToast('เปิดมุมมองกรอบมือถือ (Mobile Simulator)', 'info');
       } else {
         wrapper.className = "flex-1 w-full max-w-7xl mx-auto px-4 py-4";
@@ -2526,7 +2482,6 @@
     // 14. INITIALIZATION ON PAGE LOAD
     // ==========================================
     window.addEventListener('DOMContentLoaded', () => {
-      // Check URL query for table param, e.g. ?table=3
       const urlParams = new URLSearchParams(window.location.search);
       const urlTable = urlParams.get('table');
       if (urlTable) {
@@ -2544,7 +2499,6 @@
       renderQrCodes();
       updateCartDrawerUI();
 
-      // Countdown Timer Simulator (ticks down seconds for demo realism)
       let secondsLeft = 86 * 60 + 40;
       setInterval(() => {
         if (secondsLeft > 0) secondsLeft--;
@@ -2556,7 +2510,6 @@
         }
       }, 1000);
 
-      // Connect to SSE stream if served via Node server
       if (window.location.protocol.startsWith('http')) {
         try {
           const evtSource = new EventSource('/api/events');
@@ -2577,9 +2530,7 @@
             renderKitchenOrders();
             renderTablesGrid();
           });
-        } catch (e) {
-          // SSE not available (file:// or unsupported)
-        }
+        } catch (e) {}
       }
     });
   </script>

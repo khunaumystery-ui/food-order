@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>สั่งอาหาร</title>
+<style>
+  :root{
+    --bg:#fbf6ef; --card:#fff; --ink:#2a1d17; --muted:#8a7a70; --line:#eadfd2;
+    --red:#c8372d; --red-d:#a42a21; --gold:#e8a33d; --ok:#2e8b57; --warn:#d98a1a;
+    --shadow:0 2px 10px rgba(80,40,20,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Noto Sans Thai","Sarabun",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.45;padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+  header{background:var(--red);color:#fff;padding:16px 16px 14px;padding-top:calc(16px + env(safe-area-inset-top))}
+  header h1{margin:0;font-size:20px;font-weight:700}
+  .hd-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .pill{background:rgba(255,255,255,.18);border-radius:999px;padding:3px 12px;font-size:14px}
+  .chips{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 12px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 16px;font:inherit;font-size:15px;cursor:pointer}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  main{padding:0 12px;max-width:720px;margin:0 auto}
+  h2.sec{font-size:17px;margin:22px 4px 10px;scroll-margin-top:64px}
+  .item{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+  .item.off{opacity:.5}
+  .item .info{flex:1;min-width:0}
+  .item .nm{font-weight:600}
+  .item .ds{color:var(--muted);font-size:14px;margin-top:2px}
+  .tag{display:inline-block;margin-top:6px;font-size:13px;border-radius:6px;padding:1px 8px}
+  .tag.inc{background:#e6f4ec;color:var(--ok)}
+  .tag.ext{background:#fdf0dc;color:#9a5d00}
+  .tag.out{background:#eee;color:#777}
+  .step{display:flex;align-items:center;gap:6px;flex:none}
+  .step button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:22px;line-height:1;color:var(--red);cursor:pointer}
+  .step button.plus{background:var(--red);color:#fff;border-color:var(--red)}
+  .step button:disabled{opacity:.35}
+  .step .q{min-width:24px;text-align:center;font-weight:700}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:10}
+  .bar .tabs{display:flex;gap:8px;margin-bottom:8px}
+  .tabs button{flex:1;border:0;background:#f3ebe0;border-radius:10px;padding:9px;font:inherit;font-size:15px;cursor:pointer}
+  .tabs button.on{background:var(--ink);color:#fff}
+  .cartbtn{width:100%;border:0;border-radius:12px;background:var(--red);color:#fff;font:inherit;font-weight:700;font-size:17px;padding:13px;cursor:pointer}
+  .cartbtn:disabled{background:#d8cfc4;color:#fff}
+  .cartbtn:not(:disabled):active{background:var(--red-d)}
+  .sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:none;align-items:flex-end;justify-content:center}
+  .sheet.on{display:flex}
+  .panel{background:#fff;width:100%;max-width:720px;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+  .panel h3{margin:0 0 10px}
+  .line{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .line .nm{flex:1}
+  textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;margin-top:12px;resize:vertical}
+  .row2{display:flex;gap:10px;margin-top:14px}
+  .btn2{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px;font:inherit;cursor:pointer}
+  .btn1{flex:2;border:0;background:var(--red);color:#fff;border-radius:12px;padding:13px;font:inherit;font-weight:700;cursor:pointer}
+  .btn1:disabled{opacity:.5}
+  .order{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px}
+  .order .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;color:var(--muted);font-size:14px}
+  .st{font-weight:700;font-size:13px;border-radius:999px;padding:2px 10px}
+  .st.new{background:#fdf0dc;color:#9a5d00}
+  .st.preparing{background:#e4eefc;color:#1d5fb5}
+  .st.served{background:#e6f4ec;color:var(--ok)}
+  .st.cancelled{background:#eee;color:#777;text-decoration:line-through}
+  .order ul{margin:0;padding-left:18px}
+  .note{margin-top:6px;font-size:14px;color:var(--muted)}
+  .empty{text-align:center;color:var(--muted);padding:40px 12px}
+  .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;z-index:30;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
+  .toast.on{opacity:1}
+  .fatal{max-width:420px;margin:90px auto;text-align:center;padding:0 24px}
+  .fatal .big{font-size:48px}
+  .hide{display:none!important}
+</style>
+</head>
+<body>
+<div id="fatal" class="fatal hide"><div class="big">📵</div><h2 id="fatalMsg"></h2><p style="color:var(--muted)">กรุณาสแกน QR Code ที่โต๊ะอีกครั้ง หรือเรียกพนักงาน</p></div>
+
+<div id="app" class="hide">
+  <header>
+    <h1 id="shop"></h1>
+    <div class="hd-row"><span class="pill" id="tbl"></span><span class="pill" id="pkg"></span></div>
+  </header>
+  <div class="chips" id="chips"></div>
+  <main id="menuView"></main>
+  <main id="orderView" class="hide" style="padding-top:14px"></main>
+
+  <div class="bar">
+    <div class="tabs">
+      <button id="tabMenu" class="on">เมนู</button>
+      <button id="tabOrders">ออเดอร์ของฉัน <span id="ordCount"></span></button>
+    </div>
+    <button class="cartbtn" id="cartBtn" disabled>ตะกร้าว่าง</button>
+  </div>
+
+  <div class="sheet" id="sheet">
+    <div class="panel">
+      <h3>ตรวจสอบรายการ</h3>
+      <div id="cartLines"></div>
+      <textarea id="note" rows="2" maxlength="200" placeholder="หมายเหตุถึงครัว (ถ้ามี) เช่น ไม่เผ็ด"></textarea>
+      <div class="row2">
+        <button class="btn2" id="back">กลับไปเลือกเพิ่ม</button>
+        <button class="btn1" id="send">ส่งออเดอร์</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+(function(){
+  var qs = new URLSearchParams(location.search);
+  var T = qs.get('t'), K = qs.get('k');
+  var $ = function(s){ return document.querySelector(s); };
+  var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+  var baht = function(n){ return '฿' + Number(n).toLocaleString('th-TH'); };
+  var STATUS = { new:'รับออเดอร์แล้ว', preparing:'กำลังเตรียม', served:'เสิร์ฟแล้ว', cancelled:'ยกเลิก' };
+
+  var menu = null, tableInfo = null, cart = {}, view = 'menu', sending = false;
+
+  function fatal(msg){ $('#app').classList.add('hide'); $('#fatal').classList.remove('hide'); $('#fatalMsg').textContent = msg; }
+  function toast(msg){ var t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(function(){ t.classList.remove('on'); }, 2400); }
+
+  async function getJSON(url){
+    var r = await fetch(url, { cache:'no-store' });
+    var j = await r.json().catch(function(){ return {}; });
+    if (!r.ok) { var e = new Error(j.error || 'เกิดข้อผิดพลาด'); e.status = r.status; throw e; }
+    return j;
+  }
+
+  async function init(){
+    if (!T || !K) return fatal('ไม่พบข้อมูลโต๊ะ');
+    try {
+      var res = await Promise.all([ getJSON('/api/menu'), getJSON('/api/table/' + encodeURIComponent(T) + '?k=' + encodeURIComponent(K)) ]);
+      menu = res[0]; tableInfo = res[1];
+    } catch (e) { return fatal(e.message); }
+    document.title = menu.settings.shopName + ' · โต๊ะ ' + tableInfo.table;
+    $('#shop').textContent = menu.settings.shopName;
+    $('#tbl').textContent = 'โต๊ะ ' + tableInfo.table;
+    renderPkg();
+    renderMenu();
+    renderOrders();
+    $('#fatal').classList.add('hide');
+    $('#app').classList.remove('hide');
+    updateBar();
+    setInterval(refreshTable, 6000);
+  }
+
+  function renderPkg(){
+    var g = tableInfo.guests;
+    $('#pkg').textContent = g > 0 ? ('บุฟเฟ่ต์ ' + baht(menu.settings.buffetPrice) + '/ท่าน · ' + g + ' ท่าน') : ('บุฟเฟ่ต์ ' + baht(menu.settings.buffetPrice) + '/ท่าน');
+  }
+
+  function renderMenu(){
+    var chips = '', html = '';
+    menu.categories.forEach(function(c){
+      var items = menu.items.filter(function(i){ return i.categoryId === c.id; });
+      if (!items.length) return;
+      chips += '<button class="chip" data-cat="' + esc(c.id) + '">' + esc(c.name) + '</button>';
+      html += '<h2 class="sec" id="cat-' + esc(c.id) + '">' + esc(c.name) + '</h2>';
+      items.forEach(function(i){
+        var tag = !i.available ? '<span class="tag out">หมดชั่วคราว</span>' : (i.price > 0 ? '<span class="tag ext">+' + baht(i.price) + '</span>' : '<span class="tag inc">รวมในบุฟเฟ่ต์</span>');
+        html += '<div class="item' + (i.available ? '' : ' off') + '" data-id="' + esc(i.id) + '">' +
+          '<div class="info"><div class="nm">' + esc(i.name) + '</div>' + (i.desc ? '<div class="ds">' + esc(i.desc) + '</div>' : '') + tag + '</div>' +
+          (i.available ? '<div class="step"><button class="minus" aria-label="ลด">−</button><span class="q"></span><button class="plus" aria-label="เพิ่ม">+</button></div>' : '') +
+          '</div>';
+      });
+    });
+    $('#chips').innerHTML = chips;
+    $('#menuView').innerHTML = html || '<div class="empty">ยังไม่มีเมนู</div>';
+    menu.items.forEach(paintQty);
+  }
+
+  function paintQty(i){
+    var el = document.querySelector('.item[data-id="' + i.id + '"]');
+    if (!el) return;
+    var q = cart[i.id] || 0;
+    var qe = el.querySelector('.q'), m = el.querySelector('.minus');
+    if (!qe) return;
+    qe.textContent = q || '';
+    m.style.visibility = q ? 'visible' : 'hidden';
+    el.querySelector('.plus').disabled = q >= 20;
+  }
+
+  function change(id, d){
+    var q = Math.max(0, Math.min(20, (cart[id] || 0) + d));
+    if (q) cart[id] = q; else delete cart[id];
+    var it = menu.items.find(function(x){ return x.id === id; });
+    if (it) paintQty(it);
+    updateBar();
+  }
+
+  function cartLines(){
+    return Object.keys(cart).map(function(id){
+      var it = menu.items.find(function(x){ return x.id === id; });
+      return it ? { it: it, qty: cart[id] } : null;
+    }).filter(Boolean);
+  }
+
+  function updateBar(){
+    var ls = cartLines();
+    var n = ls.reduce(function(s, l){ return s + l.qty; }, 0);
+    var b = $('#cartBtn');
+    b.disabled = !n;
+    b.textContent = n ? ('ดูตะกร้า · ' + n + ' รายการ') : 'ตะกร้าว่าง — เลือกเมนูได้เลย';
+  }
+
+  function openSheet(){
+    var ls = cartLines();
+    if (!ls.length) return;
+    var extra = ls.reduce(function(s, l){ return s + l.it.price * l.qty; }, 0);
+    $('#cartLines').innerHTML = ls.map(function(l){
+      return '<div class="line" data-id="' + esc(l.it.id) + '"><div class="nm">' + esc(l.it.name) + (l.it.price > 0 ? ' <small style="color:#9a5d00">(+' + baht(l.it.price) + ')</small>' : '') + '</div>' +
+        '<div class="step"><button class="minus">−</button><span class="q">' + l.qty + '</span><button class="plus">+</button></div></div>';
+    }).join('') + (extra > 0 ? '<p style="margin:12px 0 0;color:#9a5d00">รายการคิดเงินเพิ่มรวม ' + baht(extra) + '</p>' : '');
+    $('#sheet').classList.add('on');
+  }
+
+  async function sendOrder(){
+    if (sending) return;
+    var ls = cartLines();
+    if (!ls.length) return;
+    sending = true; $('#send').disabled = true;
+    try {
+      var r = await fetch('/api/table/' + encodeURIComponent(T) + '/orders?k=' + encodeURIComponent(K), {
+        method:'POST', headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ items: ls.map(function(l){ return { id: l.it.id, qty: l.qty }; }), note: $('#note').value })
+      });
+      var j = await r.json().catch(function(){ return {}; });
+      if (!r.ok) throw new Error(j.error || 'ส่งออเดอร์ไม่สำเร็จ');
+      cart = {}; $('#note').value = '';
+      menu.items.forEach(paintQty); updateBar();
+      $('#sheet').classList.remove('on');
+      toast('ส่งออเดอร์ให้ครัวแล้ว ✓');
+      await refreshTable();
+      setView('orders');
+    } catch (e) { toast(e.message); }
+    sending = false; $('#send').disabled = false;
+  }
+
+  function renderOrders(){
+    var os = tableInfo.orders.slice().reverse();
+    var active = tableInfo.orders.filter(function(o){ return o.status !== 'cancelled'; }).length;
+    $('#ordCount').textContent = active ? '(' + active + ')' : '';
+    if (!os.length) { $('#orderView').innerHTML = '<div class="empty">ยังไม่มีออเดอร์<br>เลือกเมนูแล้วกดส่งได้เลย</div>'; return; }
+    $('#orderView').innerHTML = os.map(function(o){
+      var d = new Date(o.createdAt);
+      var hh = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+      return '<div class="order"><div class="top"><span>' + hh + ' น.</span><span class="st ' + esc(o.status) + '">' + esc(STATUS[o.status] || o.status) + '</span></div><ul>' +
+        o.items.map(function(i){ return '<li>' + esc(i.name) + ' × ' + i.qty + '</li>'; }).join('') + '</ul>' +
+        (o.note ? '<div class="note">หมายเหตุ: ' + esc(o.note) + '</div>' : '') + '</div>';
+    }).join('');
+  }
+
+  async function refreshTable(){
+    try {
+      tableInfo = await getJSON('/api/table/' + encodeURIComponent(T) + '?k=' + encodeURIComponent(K));
+      renderPkg(); renderOrders();
+    } catch (e) { if (e.status === 403 || e.status === 404) fatal(e.message); }
+  }
+
+  function setView(v){
+    view = v;
+    $('#menuView').classList.toggle('hide', v !== 'menu');
+    $('#chips').classList.toggle('hide', v !== 'menu');
+    $('#orderView').classList.toggle('hide', v !== 'orders');
+    $('#tabMenu').classList.toggle('on', v === 'menu');
+    $('#tabOrders').classList.toggle('on', v === 'orders');
+    window.scrollTo(0, 0);
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest('.chip');
+    if (chip) {
+      document.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === chip); });
+      var s = document.getElementById('cat-' + chip.dataset.cat);
+      if (s) s.scrollIntoView({ behavior:'smooth', block:'start' });
+      return;
+    }
+    var btn = e.target.closest('.step button');
+    if (btn) {
+      var host = btn.closest('[data-id]');
+      if (!host) return;
+      var id = host.dataset.id, d = btn.classList.contains('plus') ? 1 : -1;
+      change(id, d);
+      if (host.classList.contains('line')) {
+        if (!cart[id]) { host.remove(); if (!cartLines().length) $('#sheet').classList.remove('on'); }
+        else host.querySelector('.q').textContent = cart[id];
+      }
+    }
+  });
+  $('#cartBtn').addEventListener('click', openSheet);
+  $('#back').addEventListener('click', function(){ $('#sheet').classList.remove('on'); });
+  $('#sheet').addEventListener('click', function(e){ if (e.target === this) this.classList.remove('on'); });
+  $('#send').addEventListener('click', sendOrder);
+  $('#tabMenu').addEventListener('click', function(){ setView('menu'); });
+  $('#tabOrders').addEventListener('click', function(){ setView('orders'); refreshTable(); });
+
+  init();
+})();
+</script>
+</body>
+</html>
